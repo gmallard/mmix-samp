@@ -5,9 +5,9 @@ OBJ_SUFF = mmo
 LST_SUFF = map
 
 all:
-	make $(TARG)
+	make $(TARG).$(OBJ_SUFF)
 
-$(TARG):
+$(TARG).$(OBJ_SUFF):
 	$(MMIXAL) -l $(TARG).$(LST_SUFF) -o $(TARG).$(OBJ_SUFF) $(TARG).$(SRC_SUFF)
 
 clean:
