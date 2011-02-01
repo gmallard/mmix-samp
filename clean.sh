@@ -1,6 +1,6 @@
 #!/bin/sh
 #
 set -x
-rm *.mmo *.listing
+rm *.mmo *.listing *.map
 set +x
 

@@ -6,4 +6,5 @@ temp*
 #
 *.mmo
 *.listing
+#.map
 
