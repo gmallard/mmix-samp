@@ -1,0 +1,39 @@
+                   #
+                   # Demonstrate how to get diagnostic information.
+                   #
+                   # After assemble and link run with one of:
+                   #
+                   # mmix -r abend.mmo
+                   #
+                   # mmix -v abend.mmo
+                   #
+                   # mmix -I abend.mmo
+                   #
+                            LOC   #100
+ ...100: f4ffxxxx  Main     GETA  $255,String         Address of message
+ ...104: 00000701           TRAP  0,Fputs,StdOut      Write it
+                   #
+ ...108: f401xxxx           GETA  $1,Oct01            Data Address
+ ...10c: 8f030100           LDOU  $3,$1,0             Actual Data
+ ...110: f402xxxx           GETA  $2,Oct02            Data Address
+ ...114: 8f040200           LDOU  $4,$2,0             Actual Data
+                   #
+ ...118: 08080808           TETRA #08080808           Bad instruction
+ ...11c: 00000000           TRAP  0,Halt,0            Exit
+ ...120: 4162656e  String   BYTE  "Abend Demonstation??",#a,0
+ ...124: 64204465
+ ...128: 6d6f6e73
+ ...12c: 74617469
+ ...130: 6f6e3f3f
+ ...134: 0a00    
+ ...138: 01010101  Oct01    OCTA  #01010101010101010101010101010101
+ ...13c: 01010101
+ ...140: 02020202  Oct02    OCTA  #02020202020202020202020202020202
+ ...144: 02020202
+                   
+
+Symbol table:
+ Main = #0000000000000100 (1)
+ Oct01 = #0000000000000138 (3)
+ Oct02 = #0000000000000140 (4)
+ String = #0000000000000120 (2)
