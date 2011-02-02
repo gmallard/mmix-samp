@@ -1,6 +1,6 @@
 #
 # A first very simple example of a table scan.
-# Scan is from low memory address up.
+# Scan is from high memory address down.
 #
          LOC   Data_Segment
          GREG  @
@@ -19,10 +19,10 @@ OBYTE    BYTE  "XY"    Must be WYDE aligned! Or Strange Results!
 Main     LDA   $255,String         Point to String
          TRAP  0,Fputs,StdOut      Write it
 #
-         LDA   $4,T1BEG            First entry Address
+         LDA   $4,T1LST            First entry Address
          SETL  $5,NUMENT           Number of entries
          JMP   3F                  Merge
-2H       INCL  $4,ENTLEN           Incr next entry address
+2H       SUBU  $4,$4,ENTLEN        Decr next entry address
 3H       LDWU  $3,$4,0             Get Next Two Bytes
          STWU  $3,OBYTE            Save em
          LDA   $255,String         Point to String

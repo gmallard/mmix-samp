@@ -3,6 +3,7 @@ dirs = 	hello \
 	subcalls \
   abend \
   tscan1 \
+  tscan2 \
 
 .PHONY: $(dirs) clean
 
