@@ -6,7 +6,7 @@ LST_SUFF = map
 
 all: $(TARG).$(OBJ_SUFF)
 
-$(TARG).$(OBJ_SUFF):
+$(TARG).$(OBJ_SUFF):$(TARG).$(SRC_SUFF)
 	$(MMIXAL) -l $(TARG).$(LST_SUFF) -o $(TARG).$(OBJ_SUFF) $(TARG).$(SRC_SUFF)
 
 clean:
