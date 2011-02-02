@@ -1,6 +1,7 @@
 
 dirs = 	hello \
 	subcalls \
+  abend \
 
 .PHONY: $(dirs) clean
 
