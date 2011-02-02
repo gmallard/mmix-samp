@@ -1,3 +1,8 @@
+ifndef TARG
+here = $(shell pwd)
+bottom = $(shell basename $(here))
+TARG = $(bottom)
+endif
 
 MMIXAL = mmixal
 SRC_SUFF = mms
