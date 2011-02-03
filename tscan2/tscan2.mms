@@ -27,7 +27,7 @@ Main     LDA   $255,String         Point to String
          STWU  $3,OBYTE            Save em
          LDA   $255,String         Point to String
          TRAP  0,Fputs,StdOut      Write it
-         SUBU  $5,$5,1             Decr Entry COunt
+         SUBU  $5,$5,1             Decr Entry Count
          PBP   $5,2B               Loop For Entries
 #
          TRAP  0,Halt,0            Exit
