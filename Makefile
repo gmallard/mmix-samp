@@ -4,6 +4,7 @@ dirs = 	hello \
   abend \
   tscan1 \
   tscan2 \
+  tscan3 \
 
 .PHONY: $(dirs) clean
 
