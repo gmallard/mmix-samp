@@ -10,6 +10,10 @@ INBUFF   BYTE  "__"                Two byte buffer
 # 3.a) Key in one or two (or more characters)
 # 3.b) Press enter
 #
+# Alternatively:
+# 1) Assemble and Link
+# 2) Run with: mmix -fdata.txt fread1.mmo
+#
          LOC   #100
 Main     GETA  $255,Starts         Point to string
          TRAP  0,Fputs,StdOut      Write it
