@@ -7,6 +7,7 @@ dirs = 	hello \
   tscan3 \
   tscan4 \
   loctest \
+  exampmw \
 
 .PHONY: $(dirs) clean
 
