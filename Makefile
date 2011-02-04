@@ -9,6 +9,7 @@ dirs = 	hello \
   loctest \
   exampmw \
   fread1 \
+  tscan4a \
 
 .PHONY: $(dirs) clean
 
