@@ -11,6 +11,7 @@ dirs = 	hello \
   fread1 \
   tscan4a \
   subcallspg \
+  subcallspj \
 
 .PHONY: $(dirs) clean
 
