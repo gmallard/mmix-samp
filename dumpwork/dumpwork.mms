@@ -95,10 +95,3 @@ GetBytes LOC   @
          ADDU  $1,$6,0             // Copy working result
          POP   2,0                 // Return 2 result registers
 
-String   BYTE  "Hello, World!!!!",#a,0
-         LOC   4*((@+3)/4)         // ALign
-SubMsg   BYTE  "In Sub",#a,0
-
-
-
-
