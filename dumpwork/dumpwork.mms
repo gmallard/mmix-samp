@@ -77,7 +77,6 @@ GetBytes LOC   @
          PBN   $5,2F               // Go processs 0-9
 
 #        Process A-F
-         OR    $4,$4,#f0           // Temp for now
          LDBU  $4,$7,$5            // XLATE this value
          JMP   9F                  // Merge for next byte
 
