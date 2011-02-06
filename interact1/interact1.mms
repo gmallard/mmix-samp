@@ -12,16 +12,25 @@
 #
 # This exercise primarily shows a couple of ways to use BDIF.
 #
+# The instruction sequences used are directly from the mmix-doc
+# document in the mmixware distribution.
+#
 
          LOC   Data_Segment
          GREG  @
+# Contrived data
 VALUE1   OCTA  #0102030405060708
 VALUE2   OCTA  #0807060504030201
+# More Contrived data
+VALUE3   OCTA  #fefefefef0f0f0f0
+VALUE4   OCTA  #000102030d0e0f10
 #
 a        IS    $1
 b        IS    $2
 c        IS    $3
+acomp    IS    $3
 d        IS    $4
+clippedsums IS $4
 e        IS    $5
 x        IS    $6
 y        IS    $7
@@ -30,8 +39,9 @@ y        IS    $7
 #
          LOC   #100
 
-Main     PUSHJ $0,MinMax
-         PUSHJ $0,PixDiff
+Main     PUSHJ $0,MinMax          mmix-doc.ps, p8
+         PUSHJ $0,PixDiff         mmix-doc.ps, p8
+         PUSHJ $0,AddClip         mmix-doc.ps, p8
 #
          GETA  $255,String         Point to String
          TRAP  0,Fputs,StdOut      Write it
@@ -156,6 +166,65 @@ PixDiff  LDOU  a,VALUE1            Get 1st value
          POP   0,0
 ###############################################
 
+###############################################
+AddClip  LOC   @
+         LDOU  a,VALUE3            Get 1st value
+#
+# a = $1
+# $1=l[2]=#fefefefef0f0f0f0
+# $2=#0
+# $3=#0
+# $4=#0
+# $5=#0
+# $6=#0
+# $7=#0
+#
+         LDOU  b,VALUE4            Get 2nd value
+#
+# b = $2
+# $1=l[2]=#fefefefef0f0f0f0
+# $2=l[3]=#102030d0e0f10
+# $3=#0
+# $4=#0
+# $5=#0
+# $6=#0
+# $7=#0
+#
+         NOR   acomp,a,0           complement/Flip a
+#
+# acomp = $3
+# $1=l[2]=#fefefefef0f0f0f0
+# $2=l[3]=#102030d0e0f10
+# $3=l[4]=#10101010f0f0f0f
+# $4=#0
+# $5=#0
+# $6=#0
+# $7=#0
+#
+         BDIF  x,acomp,b           Byte Diff: acomp - b
+#
+# x = $6
+# $1=l[2]=#fefefefef0f0f0f0
+# $2=l[3]=#102030d0e0f10
+# $3=l[4]=#10101010f0f0f0f
+# $4=l[5]=#0
+# $5=l[6]=#0
+# $6=l[7]=#100000002010000
+# $7=#0
+#
+         NOR   clippedsums,x,0     Complement/Flip x
+#
+# clippedsums = $4
+# $1=l[2]=#fefefefef0f0f0f0
+# $2=l[3]=#102030d0e0f10
+# $3=l[4]=#10101010f0f0f0f
+# $4=l[5]=#fefffffffdfeffff
+# $5=l[6]=#0
+# $6=l[7]=#100000002010000
+# $7=#0
+#
+         POP   0,0
+###############################################
 
 String   BYTE  "Done",#a,0      String with newline and terminator
 
