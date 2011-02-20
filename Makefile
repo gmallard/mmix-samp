@@ -2,14 +2,14 @@
 dirs = 	hello \
 	subroutines/subcalls \
   abend \
-  tscan1 \
-  tscan2 \
-  tscan3 \
-  tscan4 \
+  tablescan/tscan1 \
+  tablescan/tscan2 \
+  tablescan/tscan3 \
+  tablescan/tscan4 \
   loctest \
   exampmw \
   fread1 \
-  tscan4a \
+  tablescan/tscan4a \
   subroutines/subcallspg \
   subroutines/subcallspj \
   interact1 \
