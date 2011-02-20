@@ -1,6 +1,6 @@
 #
 # Assemble and link.
-# Run withL mmix -i interact1.mmo
+# Run with: mmix -i interact1.mmo
 #
 # During the interactive session use:
 #
