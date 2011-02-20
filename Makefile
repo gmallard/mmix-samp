@@ -1,6 +1,6 @@
 
 dirs = 	hello \
-	subcalls \
+	subroutines/subcalls \
   abend \
   tscan1 \
   tscan2 \
@@ -10,11 +10,11 @@ dirs = 	hello \
   exampmw \
   fread1 \
   tscan4a \
-  subcallspg \
-  subcallspj \
+  subroutines/subcallspg \
+  subroutines/subcallspj \
   interact1 \
-  subcalls2 \
-  subcallsjt \
+  subroutines/subcalls2 \
+  subroutines/subcallsjt \
 
 .PHONY: $(dirs) clean
 
@@ -26,8 +26,9 @@ $(dirs):
 clean:
 	@for i in $(dirs); do \
 	echo $$i; \
+	curd=`pwd`; \
 	cd $$i && $(MAKE) clean; \
-	cd ..; \
+	cd $$curd; \
 	done
 
 
