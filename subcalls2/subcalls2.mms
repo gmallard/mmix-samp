@@ -25,6 +25,8 @@ Main     LOC   @
 //       Observe registers $0...$4 here using : mmix -i subcalls2.mmo
          GETA  $5,SendM2A          // Sub Addr
          GO    $5,$5,0						 // Call it
+//       Important:
+//			 Observe registers $0...$4 here using : mmix -i subcalls2.mmo
 //
          GETA  $255,Ending         // Address of end message
 				 TRAP  0,Fputs,StdOut      // Write it
