@@ -13,6 +13,7 @@ dirs = 	hello \
   subcallspg \
   subcallspj \
   interact1 \
+  subcalls2 \
 
 .PHONY: $(dirs) clean
 
