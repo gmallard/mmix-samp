@@ -16,7 +16,6 @@
 // Change to Data
           LOC   9B
 Starting  BYTE  "Starting ....",#a,0
-          LOC   4*((@+3)/4)         // TETRA Align
 Ending    BYTE  "Ending ....",#a,0
 9H        IS    @
 
@@ -35,7 +34,6 @@ Main      LDA   $255,Starting       // Address of start message
 
 // Change to Data
           LOC   9B
-          LOC   4*((@+3)/4)         // TETRA Align
 Sub1Msg   BYTE  "Message from routine one",#a,0
 9H        IS    @
 
@@ -48,7 +46,6 @@ SendM1A   LDA   $255,Sub1Msg        // Message Address
 
 // Change to Data
           LOC   9B
-          LOC   4*((@+3)/4)         // TETRA Align
 Sub2Msg   BYTE  "Message from routine two",#a,0
 9H        IS    @
 
