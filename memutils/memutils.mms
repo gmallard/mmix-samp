@@ -13,16 +13,32 @@
 Blank     OCTA  #20
 String    IS    @
           BYTE  "1234567890"
-StringLen IS    @-String
-          BYTE  #42
+StringLen IS    @-String            // Bytes
+          BYTE  #42 // Eye catcher
+//
           LOC   8*((@+7)/8)         // OCTA Align
 String2   IS    @
           BYTE  "12345678"
           BYTE  "12345678"
           BYTE  "12345678"
           BYTE  "12345678"
-String2Ln IS    (@-String2)/8
+String2Ln IS    (@-String2)/8       // OCTAs
           BYTE  #42
+//
+          LOC   8*((@+7)/8)         // OCTA Align
+String3   IS    @
+          BYTE  "98765432"
+          BYTE  "98765432"
+String3Ln IS    (@-String3)         // Bytes
+          BYTE  #42
+//
+          LOC   8*((@+7)/8)         // OCTA Align
+ToHere    IS    @
+          OCTA  #0101010101010101
+          OCTA  #0101010101010101
+          OCTA  #0101010101010101
+          OCTA  #0101010101010101
+          BYTE  #42 // Eye catcher
 9H        IS    @
 // Code
           LOC   8B
@@ -47,6 +63,11 @@ Main      IS    @
           ORH   $10,#2020           // Set Value
           PUSHJ $7,MemSetOct        // Call Set
 //
+          LDA   $8,ToHere           // To address
+          LDA   $9,String3          // From Address
+          SETL  $10,String3Ln       // Byte Count
+          PUSHJ $7,MemCpy           // Call copy
+//
           TRAP  0,Halt,0            // Exit
 8H        IS    @
 // -------------------------------------------------------------------
@@ -55,7 +76,7 @@ MemSet    IS    @
 // Set mmemory to a given value.  A crude byte-by-byte implementation.
 //
 // $0 => Start Address
-// $1 => Length
+// $1 => Length (byte count)
 // $2 => Replacement Byte
 0H        STBU  $2,$0,0           // Set byte to value
           ADDU  $0,$0,1           // Increment Output Addr
@@ -76,6 +97,24 @@ MemSetOct IS    @
           ADDU  $0,$0,8           // Increment Output Addr
           SUBU  $1,$1,1           // Decrement count
           PBP   $1,0B             // Loop for all
+          POP   0,0               // Return
+8H        IS    @
+
+// -------------------------------------------------------------------
+          LOC   8B
+MemCpy    IS    @
+// Copy memory, byte-by-byte.
+//
+// $0 => To Address
+// $1 => From Address
+// $2 => Length (byte count)
+0H        LDBU  $3,$1,0           // Get From Byte
+          STBU  $3,$0,0           // Store it
+          ADDU  $0,$0,1           // Increment To Addr
+          ADDU  $1,$1,1           // Increment From Addr
+//
+          SUBU  $2,$2,1           // Decrement byte count
+          PBP   $2,0B             // Loop for all
           POP   0,0               // Return
 8H        IS    @
 
