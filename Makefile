@@ -17,6 +17,7 @@ dirs = 	hello \
   subroutines/subcallsjt \
   subroutines/subpj89 \
   sample \
+  memutils \
 
 .PHONY: $(dirs) clean
 
