@@ -16,6 +16,7 @@ dirs = 	hello \
   subroutines/subcalls2 \
   subroutines/subcallsjt \
   subroutines/subpj89 \
+  sample \
 
 .PHONY: $(dirs) clean
 
