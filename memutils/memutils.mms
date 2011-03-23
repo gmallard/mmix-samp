@@ -39,6 +39,23 @@ ToHere    IS    @
           OCTA  #0101010101010101
           OCTA  #0101010101010101
           BYTE  #42 // Eye catcher
+//
+          LOC   8*((@+7)/8)         // OCTA Align
+String4   IS    @
+          BYTE  "13572468"
+          BYTE  "13572468"
+          BYTE  "13572468"
+          BYTE  "13572468"
+String4Ln IS    (@-String4)/8       // OCTAs
+          BYTE  #42
+//
+          LOC   8*((@+7)/8)         // OCTA Align
+ToHere2   IS    @
+          OCTA  #0202020202020202
+          OCTA  #0202020202020202
+          OCTA  #0202020202020202
+          OCTA  #0202020202020202
+          BYTE  #42 // Eye catcher
 9H        IS    @
 // Code
           LOC   8B
@@ -67,6 +84,11 @@ Main      IS    @
           LDA   $9,String3          // From Address
           SETL  $10,String3Ln       // Byte Count
           PUSHJ $7,MemCpy           // Call copy
+//
+          LDA   $8,ToHere2          // To address
+          LDA   $9,String4          // From Address
+          SETL  $10,String4Ln       // OCTA Count
+          PUSHJ $7,MemCpyOct        // Call copy
 //
           TRAP  0,Halt,0            // Exit
 8H        IS    @
@@ -114,6 +136,24 @@ MemCpy    IS    @
           ADDU  $1,$1,1           // Increment From Addr
 //
           SUBU  $2,$2,1           // Decrement byte count
+          PBP   $2,0B             // Loop for all
+          POP   0,0               // Return
+8H        IS    @
+
+// -------------------------------------------------------------------
+          LOC   8B
+MemCpyOct IS    @
+// Copy memory, OCTA-by-OCTA
+//
+// $0 => To Address
+// $1 => From Address
+// $2 => Length (OCTA count)
+0H        LDOU  $3,$1,0           // Get From OCTA
+          STOU  $3,$0,0           // Store it
+          ADDU  $0,$0,8           // Increment To Addr
+          ADDU  $1,$1,8           // Increment From Addr
+//
+          SUBU  $2,$2,1           // Decrement OCTA count
           PBP   $2,0B             // Loop for all
           POP   0,0               // Return
 8H        IS    @
