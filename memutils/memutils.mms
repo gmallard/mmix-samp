@@ -145,9 +145,13 @@ MemCpy    IS    @
 MemCpyOct IS    @
 // Copy memory, OCTA-by-OCTA
 //
-// $0 => To Address
-// $1 => From Address
+// $0 => To Address (OCTA aligned)
+// $1 => From Address (OCTA aligned)
 // $2 => Length (OCTA count)
+//
+// Programming Note:  If the to and/or from address is _not_ OCTA
+// aligned, this routine will silently corrupt some part of the 
+// caller's memory space.  Let the caller beware!
 0H        LDOU  $3,$1,0           // Get From OCTA
           STOU  $3,$0,0           // Store it
           ADDU  $0,$0,8           // Increment To Addr
