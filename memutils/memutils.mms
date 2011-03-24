@@ -74,7 +74,6 @@ Main      IS    @
           LDA   $8,String2          // Address
           SETL  $9,String2Ln        // OCTA Count
           SETL  $10,#2020           // Set Value
-          SETL  $10,#2020           // Set Value
           ORML  $10,#2020           // Set Value
           ORMH  $10,#2020           // Set Value
           ORH   $10,#2020           // Set Value
