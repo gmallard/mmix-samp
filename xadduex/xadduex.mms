@@ -17,6 +17,7 @@
 //
 // MULU - 10u
 // SLU - 1u
+// ADDU - 1u
 // 2ADDU - 1u
 // 4ADDU - 1u
 // 8ADDU - 1u
@@ -160,7 +161,14 @@ Mult05    IS    @
           LOC   8B
 Mult06    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,6             // TODO: replace
+//
+// Strategy 1: Timing = 2u
+//          4ADDU $0,$2,$2            // *= 5
+//          ADDU  $0,$0,$2            // + 1
+//
+// Strategy 2: Timing = 2u
+          2ADDU $0,$2,$2            // *= 3
+          SLU   $0,$0,1             // *= 2 ==> 6
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
