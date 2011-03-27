@@ -32,7 +32,53 @@
 // the range: 2...32.
 //
 // Input data: 42 (decimal) in all cases.
+//
+// Expected results:
+// i:2 Result: 84 == 0x54
+// i:3 Result: 126 == 0x7e
+// i:4 Result: 168 == 0xa8
+// i:5 Result: 210 == 0xd2
+// i:6 Result: 252 == 0xfc
+// i:7 Result: 294 == 0x126
+// i:8 Result: 336 == 0x150
+// i:9 Result: 378 == 0x17a
+// i:10 Result: 420 == 0x1a4
+// i:11 Result: 462 == 0x1ce
+// i:12 Result: 504 == 0x1f8
+// i:13 Result: 546 == 0x222
+// i:14 Result: 588 == 0x24c
+// i:15 Result: 630 == 0x276
+// i:16 Result: 672 == 0x2a0
+// i:17 Result: 714 == 0x2ca
+// i:18 Result: 756 == 0x2f4
+// i:19 Result: 798 == 0x31e
+// i:20 Result: 840 == 0x348
+// i:21 Result: 882 == 0x372
+// i:22 Result: 924 == 0x39c
+// i:23 Result: 966 == 0x3c6
+// i:24 Result: 1008 == 0x3f0
+// i:25 Result: 1050 == 0x41a
+// i:26 Result: 1092 == 0x444
+// i:27 Result: 1134 == 0x46e
+// i:28 Result: 1176 == 0x498
+// i:29 Result: 1218 == 0x4c2
+// i:30 Result: 1260 == 0x4ec
+// i:31 Result: 1302 == 0x516
+// i:32 Result: 1344 == 0x540
 
+// Implementation Strategy:
+//
+// Let's cherry pick first.  It is clearly easy to implement:
+// - 2*$x
+// - 3*$x
+// - 4*$x
+// - 5*$x
+// - 8*$x
+// - 9*$x
+// - 16*$x
+// - 17*$x
+// with a single instruction.
+//
 
 // Data - Pattern
           LOC   9B
