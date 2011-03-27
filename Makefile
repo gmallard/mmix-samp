@@ -18,6 +18,7 @@ dirs = 	hello \
   subroutines/subpj89 \
   sample \
   memutils \
+  morex \
 
 .PHONY: $(dirs) clean
 
