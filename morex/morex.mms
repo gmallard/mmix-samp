@@ -22,6 +22,7 @@ Main      IS    @
           PUSHJ $0,BCOPYDISP       // Byte Copy Only
           PUSHJ $0,LOW2BDISP       // 2-byte merge
           PUSHJ $0,MRGBBDISP       // Multi byte merge
+          PUSHJ $0,MCMPBDISP       // More complex data
           TRAP  0,Halt,0           // Exit
 8H        IS    @
 
@@ -93,7 +94,6 @@ FIDDLEDAT OCTA  #80402010080402ff  # Not so straight extract
  OCTA  #000000000000000e  // Not so straight extract => 7, 4
  OCTA  #000000000000000f  // Not so straight extract => f, c
 FDATTNENT IS    (@-FIDDLEDAT)/8
-
 9H        IS    @
 
 // Code
@@ -109,6 +109,23 @@ MRGBBDISP IS    @
           ADDU  $1,$1,8         // Incr mask address
           SUBU  $0,$0,1         // Decrement count
           PBP   $0,0B           // Loop for all entries
+          POP   0,0
+8H        IS    @
+
+// -------------------------------------------------------------------
+// Data
+          LOC   9B
+CLMPDATA0 OCTA  #000000000001aa5d  # Data
+CMPLDMSK  OCTA  #0000000000000003  # Not so straight extract
+9H        IS    @
+
+// Code
+          LOC   8B
+MCMPBDISP IS    @
+          LDOU  $3,CLMPDATA0    // Data
+          LDOU  $2,CMPLDMSK     // Mask
+          MOR   $4,$3,$2        // MOR
+          MXOR  $5,$3,$2        // MXOR
           POP   0,0
 8H        IS    @
 
