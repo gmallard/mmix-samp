@@ -69,14 +69,14 @@
 // Implementation Strategy:
 //
 // Let's cherry pick first.  It is clearly easy to implement:
-// - 2*$x
-// - 3*$x
-// - 4*$x
-// - 5*$x
-// - 8*$x
-// - 9*$x
-// - 16*$x
-// - 17*$x
+// - 2*$x (2ADDU $R,$x,0)
+// - 3*$x (2ADDU $R,$x,$x)
+// - 4*$x (4ADDU $R,$x,0)
+// - 5*$x (4ADDU $R,$x,$x)
+// - 8*$x (8ADDU $R,$x,0)
+// - 9*$x (8ADDU $R,$x,$x)
+// - 16*$x (16ADDU $R,$x,0)
+// - 17*$x (16ADDU $R,$x,$x)
 // with a single instruction.
 //
 
@@ -132,28 +132,28 @@ Main      IS    @
           LOC   8B
 Mult02    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,2             // TODO: replace
+          2ADDU $0,$2,0             // *= 2
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
           LOC   8B
 Mult03    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,3             // TODO: replace
+          2ADDU $0,$2,$2            // *= 3
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
           LOC   8B
 Mult04    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,4             // TODO: replace
+          4ADDU $0,$2,0             // *= 4
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
           LOC   8B
 Mult05    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,5             // TODO: replace
+          4ADDU $0,$2,$2            // *= 5
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
@@ -174,14 +174,14 @@ Mult07    IS    @
           LOC   8B
 Mult08    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,8             // TODO: replace
+          8ADDU $0,$2,0             // *= 8
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
           LOC   8B
 Mult09    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,9             // TODO: replace
+          8ADDU $0,$2,$2            // *= 9
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
@@ -230,14 +230,14 @@ Mult15    IS    @
           LOC   8B
 Mult16    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,16            // TODO: replace
+          16ADDU $0,$2,0            // *= 16
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
           LOC   8B
 Mult17    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,17            // TODO: replace
+          16ADDU $0,$2,$2           // *= 17
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
