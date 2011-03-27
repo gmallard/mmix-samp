@@ -74,7 +74,6 @@ Main      IS    @
           LDA   $8,String2          // Address
           SETL  $9,String2Ln        // OCTA Count
           SETL  $10,#2020           // Set Value
-          SETL  $10,#2020           // Set Value
           ORML  $10,#2020           // Set Value
           ORMH  $10,#2020           // Set Value
           ORH   $10,#2020           // Set Value
@@ -95,7 +94,7 @@ Main      IS    @
 // -------------------------------------------------------------------
           LOC   8B
 MemSet    IS    @
-// Set mmemory to a given value.  A crude byte-by-byte implementation.
+// Set memory to a given value.  A crude byte-by-byte implementation.
 //
 // $0 => Start Address
 // $1 => Length (byte count)
@@ -109,8 +108,37 @@ MemSet    IS    @
 
 // -------------------------------------------------------------------
           LOC   8B
+MemSetWyd IS    @
+// Set memory WYDE's to a given value.
+//
+// $0 => Start Address (WYDE ALigned)
+// $1 => Length (in WYDEs)
+// $2 => Replacement Value (All 2 bytes)
+0H        STWU  $2,$0,0           // Set WYDE to value
+          ADDU  $0,$0,2           // Increment Output Addr
+          SUBU  $1,$1,1           // Decrement count
+          PBP   $1,0B             // Loop for all
+          POP   0,0               // Return
+8H        IS    @
+
+// -------------------------------------------------------------------
+          LOC   8B
+MemSetTet IS    @
+// Set memory TETRA's to a given value.
+//
+// $0 => Start Address (TETRA ALigned)
+// $1 => Length (in TETRAs)
+// $2 => Replacement Value (All 4 bytes)
+0H        STTU  $2,$0,0           // Set TETRA to value
+          ADDU  $0,$0,4           // Increment Output Addr
+          SUBU  $1,$1,1           // Decrement count
+          PBP   $1,0B             // Loop for all
+          POP   0,0               // Return
+8H        IS    @
+// -------------------------------------------------------------------
+          LOC   8B
 MemSetOct IS    @
-// Set mmemory OCTA's to a given value.
+// Set memory OCTA's to a given value.
 //
 // $0 => Start Address (OCTA ALigned)
 // $1 => Length (in OCTAs)
@@ -142,12 +170,59 @@ MemCpy    IS    @
 
 // -------------------------------------------------------------------
           LOC   8B
+MemCpyWyd IS    @
+// Copy memory, WYDE-by-WYDE
+//
+// $0 => To Address (WYDE aligned)
+// $1 => From Address (WYDE aligned)
+// $2 => Length (WYDE count)
+//
+// Programming Note:  If the to and/or from address is _not_ WYDE
+// aligned, this routine will silently corrupt some part of the 
+// caller's memory space.  Let the caller beware!
+0H        LDWU  $3,$1,0           // Get From WYDE
+          STWU  $3,$0,0           // Store it
+          ADDU  $0,$0,2           // Increment To Addr
+          ADDU  $1,$1,2           // Increment From Addr
+//
+          SUBU  $2,$2,1           // Decrement WYDE count
+          PBP   $2,0B             // Loop for all
+          POP   0,0               // Return
+8H        IS    @
+
+// -------------------------------------------------------------------
+          LOC   8B
+MemCpyTet IS    @
+// Copy memory, TETRA-by-TETRA
+//
+// $0 => To Address (TETRA aligned)
+// $1 => From Address (TETRA aligned)
+// $2 => Length (TETRA count)
+//
+// Programming Note:  If the to and/or from address is _not_ TETRA
+// aligned, this routine will silently corrupt some part of the 
+// caller's memory space.  Let the caller beware!
+0H        LDTU  $3,$1,0           // Get From TETRA
+          STTU  $3,$0,0           // Store it
+          ADDU  $0,$0,4           // Increment To Addr
+          ADDU  $1,$1,4           // Increment From Addr
+//
+          SUBU  $2,$2,1           // Decrement TETRA count
+          PBP   $2,0B             // Loop for all
+          POP   0,0               // Return
+8H        IS    @
+// -------------------------------------------------------------------
+          LOC   8B
 MemCpyOct IS    @
 // Copy memory, OCTA-by-OCTA
 //
-// $0 => To Address
-// $1 => From Address
+// $0 => To Address (OCTA aligned)
+// $1 => From Address (OCTA aligned)
 // $2 => Length (OCTA count)
+//
+// Programming Note:  If the to and/or from address is _not_ OCTA
+// aligned, this routine will silently corrupt some part of the 
+// caller's memory space.  Let the caller beware!
 0H        LDOU  $3,$1,0           // Get From OCTA
           STOU  $3,$0,0           // Store it
           ADDU  $0,$0,8           // Increment To Addr
