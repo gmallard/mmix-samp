@@ -56,15 +56,15 @@
 // i:20 Result: 840 == 0x348 (*DONE) 
 // i:21 Result: 882 == 0x372 (*DONE)
 // i:22 Result: 924 == 0x39c (*DONE) (3 instructions)
-// i:23 Result: 966 == 0x3c6
+// i:23 Result: 966 == 0x3c6 (*DONE) (3 instructions)
 // i:24 Result: 1008 == 0x3f0 (*DONE) 
 // i:25 Result: 1050 == 0x41a (*DONE)
 // i:26 Result: 1092 == 0x444 (*DONE) (3 instructions)
 // i:27 Result: 1134 == 0x46e (*DONE)
-// i:28 Result: 1176 == 0x498
-// i:29 Result: 1218 == 0x4c2
+// i:28 Result: 1176 == 0x498 (*DONE) (3 instructions)
+// i:29 Result: 1218 == 0x4c2 (*DONE) (3 instructions)
 // i:30 Result: 1260 == 0x4ec (*DONE) (3 instructions)
-// i:31 Result: 1302 == 0x516
+// i:31 Result: 1302 == 0x516 (*DONE)
 // i:32 Result: 1344 == 0x540 (*DONE) (1 instruction)
 
 // Implementation Strategy:
@@ -128,16 +128,19 @@
 // => 27 (*OK)
 //
 // What is left?
-// 14, 22, 23, 26, 28, 29, 30
+// 14, 22, 23, 26, 28, 29, 30, 31
 // If we relax a 'two instruction requirement', these should be easy
 // (?) to implement with three instrucations.
+// If plain ADDU or SUBU is allowed (1u), some can be done in two
+// instructions.
 // => 14 (*OK)
 // => 22 (*OK)
-// => 23
+// => 23 (*OK)
 // => 26 (*OK)
-// => 28
-// => 29
+// => 28 (*OK)
+// => 29 (*OK)
 // => 30 (*OK)
+// => 31 (*OK) (2 Instructions)
 
 // Data - Pattern
           LOC   9B
@@ -373,7 +376,10 @@ Mult22    IS    @
           LOC   8B
 Mult23    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,23            // TODO: replace
+// 3 Instruction, with additional ADD
+          16ADDU $0,$2,$2           // *=17
+          4ADDU $0,$2,$0            // +4 => 21
+          2ADDU $0,$2,$0            // +2 => 23
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
@@ -414,21 +420,27 @@ Mult27    IS    @
           LOC   8B
 Mult28    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,28            // TODO: replace
+// 3 Instruction, additional ADD
+          8ADDU $0,$2,0             // *= 8
+          16ADDU $0,$2,$0           // + *16 => 24
+          4ADDU $0,$2,$0            // +4 => 28
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
           LOC   8B
 Mult29    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,29            // TODO: replace
+// 3 Instruction, additional ADD
+          2ADDU $0,$2,$2            // *=3
+          8ADDU $0,$0,$0            // *=9 => 27
+          2ADDU $0,$2,$0            // +2 => 29
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
           LOC   8B
 Mult30    IS    @
           SETL  $2,42               // Data
-// 3 Instruction solution
+// 3 Instruction solution, with shift
           2ADDU $0,$2,$2            // *=3
           4ADDU $0,$0,$0            // *4 + 3 => 15
           SLU   $0,$0,1             // *2
@@ -438,7 +450,9 @@ Mult30    IS    @
           LOC   8B
 Mult31    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,31            // TODO: replace
+// *32 - 1 implementation
+          SLU   $0,$2,5             // *= 6 
+          SUBU  $0,$0,$2            // minus 1
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
