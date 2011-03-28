@@ -48,9 +48,9 @@
 // i:12 Result: 504 == 0x1f8
 // i:13 Result: 546 == 0x222
 // i:14 Result: 588 == 0x24c
-// i:15 Result: 630 == 0x276 (*DONE) (1 instruction)
+// i:15 Result: 630 == 0x276
 // i:16 Result: 672 == 0x2a0 (*DONE) (1 instruction)
-// i:17 Result: 714 == 0x2ca
+// i:17 Result: 714 == 0x2ca (*DONE) (1 instruction)
 // i:18 Result: 756 == 0x2f4
 // i:19 Result: 798 == 0x31e
 // i:20 Result: 840 == 0x348
@@ -86,7 +86,31 @@
 // That is a reminder that shifts (SLU) are 1u as well, and we should
 // cherry pick remaining powers of 2 (in this case, only 32 remains).
 //
-
+// What next?
+//
+// For any result computed in one instruction, it should be clear that
+// we can multiply that result by: 2, 3, 4, 5, 8, 9, 16, 17, or 32
+// with a single additional xADDU instruction.
+//
+// The single instruction values are the same as listed, i.e.:
+// 2, 3, 4, 5, 8, 9, 16, 17, 32
+//
+// Let's consider those one at a time.
+//
+// For 2: can get -> 3 // (*DONE)
+//                -> 4 // (*DONE)
+// For 3: can get -> 6 // (*DONE)
+//                -> 7 // (TODO)
+// For 4: can get -> 8 // (*DONE)
+//                -> 9 // (*DONE)
+// For 5: can get -> 10 // (TODO)
+//                -> 11 // (TODO)
+// For 8: can get -> 16 // (*DONE)
+//                -> 17 // (*DONE)
+// For 9: can get -> 18 // (TODO)
+//                -> 19 // (TODO)
+// For 16, 17, and 32 the results are beyond the scope of this effort,
+// but could easily be demonstrated.
 
 // Data - Pattern
           LOC   9B
