@@ -35,21 +35,21 @@
 // Input data: 42 (decimal) in all cases.
 //
 // Expected results:
-// i:2 Result: 84 == 0x54
-// i:3 Result: 126 == 0x7e
-// i:4 Result: 168 == 0xa8
-// i:5 Result: 210 == 0xd2
-// i:6 Result: 252 == 0xfc
+// i:2 Result: 84 == 0x54 (*DONE)
+// i:3 Result: 126 == 0x7e (*DONE)
+// i:4 Result: 168 == 0xa8 (*DONE)
+// i:5 Result: 210 == 0xd2 (*DONE)
+// i:6 Result: 252 == 0xfc (*DONE)
 // i:7 Result: 294 == 0x126
-// i:8 Result: 336 == 0x150
-// i:9 Result: 378 == 0x17a
+// i:8 Result: 336 == 0x150 (*DONE)
+// i:9 Result: 378 == 0x17a (*DONE)
 // i:10 Result: 420 == 0x1a4
 // i:11 Result: 462 == 0x1ce
 // i:12 Result: 504 == 0x1f8
 // i:13 Result: 546 == 0x222
 // i:14 Result: 588 == 0x24c
-// i:15 Result: 630 == 0x276
-// i:16 Result: 672 == 0x2a0
+// i:15 Result: 630 == 0x276 (*DONE)
+// i:16 Result: 672 == 0x2a0 (*DONE)
 // i:17 Result: 714 == 0x2ca
 // i:18 Result: 756 == 0x2f4
 // i:19 Result: 798 == 0x31e
@@ -65,7 +65,7 @@
 // i:29 Result: 1218 == 0x4c2
 // i:30 Result: 1260 == 0x4ec
 // i:31 Result: 1302 == 0x516
-// i:32 Result: 1344 == 0x540
+// i:32 Result: 1344 == 0x540 (*DONE)
 
 // Implementation Strategy:
 //
@@ -80,6 +80,13 @@
 // - 17*$x (16ADDU $R,$x,$x)
 // with a single instruction.
 //
+// Implement the first (least) value we do not yet have.  This is 6.
+// See below for one concrete implementation, and another in comments.
+//
+// That is a reminder that shifts (SLU) are 1u as well, and we should
+// cherry pick remaining powers of 2 (in this case, only 32 remains).
+//
+
 
 // Data - Pattern
           LOC   9B
@@ -350,7 +357,7 @@ Mult31    IS    @
           LOC   8B
 Mult32    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,32            // TODO: replace
+          SLU   $0,$2,5             // *= 6 
           POP   1,0                 // Result in $0
 8H        IS    @
 
