@@ -45,7 +45,7 @@
 // i:9 Result: 378 == 0x17a (*DONE) (1 instruction)
 // i:10 Result: 420 == 0x1a4 (*DONE)
 // i:11 Result: 462 == 0x1ce (*DONE)
-// i:12 Result: 504 == 0x1f8
+// i:12 Result: 504 == 0x1f8 (*DONE)
 // i:13 Result: 546 == 0x222
 // i:14 Result: 588 == 0x24c
 // i:15 Result: 630 == 0x276
@@ -111,7 +111,10 @@
 //                -> 19 // (*DONE)
 // For 16, 17, and 32 the results are beyond the scope of this effort,
 // but could easily be demonstrated.
-
+//
+// Implement 'obvious' cases:
+// 4+8 => 12
+//
 // Data - Pattern
           LOC   9B
 9H        IS    @
@@ -255,7 +258,9 @@ Mult11    IS    @
           LOC   8B
 Mult12    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,12            // TODO: replace
+// Strategy 1: Timing = 2u
+          4ADDU $0,$2,0             // *=4
+          8ADDU $0,$2,$0            // *8 + 4 => 12
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
