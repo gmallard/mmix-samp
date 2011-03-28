@@ -35,21 +35,21 @@
 // Input data: 42 (decimal) in all cases.
 //
 // Expected results:
-// i:2 Result: 84 == 0x54 (*DONE)
-// i:3 Result: 126 == 0x7e (*DONE)
-// i:4 Result: 168 == 0xa8 (*DONE)
-// i:5 Result: 210 == 0xd2 (*DONE)
+// i:2 Result: 84 == 0x54 (*DONE) (1 instruction)
+// i:3 Result: 126 == 0x7e (*DONE) (1 instruction)
+// i:4 Result: 168 == 0xa8 (*DONE) (1 instruction)
+// i:5 Result: 210 == 0xd2 (*DONE) (1 instruction)
 // i:6 Result: 252 == 0xfc (*DONE)
 // i:7 Result: 294 == 0x126
-// i:8 Result: 336 == 0x150 (*DONE)
-// i:9 Result: 378 == 0x17a (*DONE)
+// i:8 Result: 336 == 0x150 (*DONE) (1 instruction)
+// i:9 Result: 378 == 0x17a (*DONE) (1 instruction)
 // i:10 Result: 420 == 0x1a4
 // i:11 Result: 462 == 0x1ce
 // i:12 Result: 504 == 0x1f8
 // i:13 Result: 546 == 0x222
 // i:14 Result: 588 == 0x24c
-// i:15 Result: 630 == 0x276 (*DONE)
-// i:16 Result: 672 == 0x2a0 (*DONE)
+// i:15 Result: 630 == 0x276 (*DONE) (1 instruction)
+// i:16 Result: 672 == 0x2a0 (*DONE) (1 instruction)
 // i:17 Result: 714 == 0x2ca
 // i:18 Result: 756 == 0x2f4
 // i:19 Result: 798 == 0x31e
@@ -65,7 +65,7 @@
 // i:29 Result: 1218 == 0x4c2
 // i:30 Result: 1260 == 0x4ec
 // i:31 Result: 1302 == 0x516
-// i:32 Result: 1344 == 0x540 (*DONE)
+// i:32 Result: 1344 == 0x540 (*DONE) (1 instruction)
 
 // Implementation Strategy:
 //
