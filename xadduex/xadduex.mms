@@ -58,7 +58,7 @@
 // i:22 Result: 924 == 0x39c
 // i:23 Result: 966 == 0x3c6
 // i:24 Result: 1008 == 0x3f0 (*DONE) 
-// i:25 Result: 1050 == 0x41a
+// i:25 Result: 1050 == 0x41a (*DONE)
 // i:26 Result: 1092 == 0x444
 // i:27 Result: 1134 == 0x46e
 // i:28 Result: 1176 == 0x498
@@ -112,10 +112,13 @@
 // For 16, 17, and 32 the results are beyond the scope of this effort,
 // but could easily be demonstrated.
 //
-// Implement 'obvious' cases:
+// Next, implement 'obvious' cases:
 // 4+8 => 12
 // 4+16 => 20
 // 8+16 => 24
+//
+// Next, steal one from Dr. Knuth:
+// => 25
 //
 // Data - Pattern
           LOC   9B
@@ -357,7 +360,8 @@ Mult24    IS    @
           LOC   8B
 Mult25    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,25            // TODO: replace
+          4ADDU $0,$2,$2            // *= 5
+          4ADDU $0,$0,$0            // *4 + 1 = 25
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
