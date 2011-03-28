@@ -47,7 +47,7 @@
 // i:11 Result: 462 == 0x1ce (*DONE)
 // i:12 Result: 504 == 0x1f8 (*DONE)
 // i:13 Result: 546 == 0x222 (*DONE)
-// i:14 Result: 588 == 0x24c
+// i:14 Result: 588 == 0x24c (*DONE) (3 instructions)
 // i:15 Result: 630 == 0x276 (*DONE)
 // i:16 Result: 672 == 0x2a0 (*DONE) (1 instruction)
 // i:17 Result: 714 == 0x2ca (*DONE) (1 instruction)
@@ -55,15 +55,15 @@
 // i:19 Result: 798 == 0x31e (*DONE) 
 // i:20 Result: 840 == 0x348 (*DONE) 
 // i:21 Result: 882 == 0x372 (*DONE)
-// i:22 Result: 924 == 0x39c
+// i:22 Result: 924 == 0x39c (*DONE) (3 instructions)
 // i:23 Result: 966 == 0x3c6
 // i:24 Result: 1008 == 0x3f0 (*DONE) 
 // i:25 Result: 1050 == 0x41a (*DONE)
-// i:26 Result: 1092 == 0x444
+// i:26 Result: 1092 == 0x444 (*DONE) (3 instructions)
 // i:27 Result: 1134 == 0x46e (*DONE)
 // i:28 Result: 1176 == 0x498
 // i:29 Result: 1218 == 0x4c2
-// i:30 Result: 1260 == 0x4ec
+// i:30 Result: 1260 == 0x4ec (*DONE) (3 instructions)
 // i:31 Result: 1302 == 0x516
 // i:32 Result: 1344 == 0x540 (*DONE) (1 instruction)
 
@@ -129,6 +129,15 @@
 //
 // What is left?
 // 14, 22, 23, 26, 28, 29, 30
+// If we relax a 'two instruction requirement', these should be easy
+// (?) to implement with three instrucations.
+// => 14 (*OK)
+// => 22 (*OK)
+// => 23
+// => 26 (*OK)
+// => 28
+// => 29
+// => 30 (*OK)
 
 // Data - Pattern
           LOC   9B
@@ -290,7 +299,10 @@ Mult13    IS    @
           LOC   8B
 Mult14    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,14            // TODO: replace
+// 3 Instruction solution: use 7 plus shift
+          4ADDU $0,$2,$2            // *= 5
+          2ADDU $0,$2,$0            // +2
+          SLU   $0,$0,1             // * 2
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
@@ -351,7 +363,10 @@ Mult21    IS    @
           LOC   8B
 Mult22    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,22            // TODO: replace
+// 3 Instruction solution:  use 11 plus shift
+          4ADDU $0,$2,$2            // *= 5
+          2ADDU $0,$0,$2            // *2 +1 => 11
+          SLU   $0,$0,1             // *2
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
@@ -381,7 +396,10 @@ Mult25    IS    @
           LOC   8B
 Mult26    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,26            // TODO: replace
+// 3 Instruction solution
+          2ADDU $0,$2,$2            // *=3
+          4ADDU $0,$0,$2            // *4 + 1 => 13
+          SLU   $0,$0,1             // *2
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
@@ -410,7 +428,10 @@ Mult29    IS    @
           LOC   8B
 Mult30    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,30            // TODO: replace
+// 3 Instruction solution
+          2ADDU $0,$2,$2            // *=3
+          4ADDU $0,$0,$0            // *4 + 3 => 15
+          SLU   $0,$0,1             // *2
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
