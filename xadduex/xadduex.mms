@@ -43,7 +43,7 @@
 // i:7 Result: 294 == 0x126 (*DONE)
 // i:8 Result: 336 == 0x150 (*DONE) (1 instruction)
 // i:9 Result: 378 == 0x17a (*DONE) (1 instruction)
-// i:10 Result: 420 == 0x1a4
+// i:10 Result: 420 == 0x1a4 (*DONE)
 // i:11 Result: 462 == 0x1ce
 // i:12 Result: 504 == 0x1f8
 // i:13 Result: 546 == 0x222
@@ -99,11 +99,11 @@
 //
 // For 2: can get -> 4 // (*DONE)
 //                -> 5 // (*DONE)
-// For 3: can get -> 6 // (*DONE, 2 instructions)
+// For 3: can get -> 6 // (*DONE)
 //                -> 7 // (*DONE)
 // For 4: can get -> 8 // (*DONE)
 //                -> 9 // (*DONE)
-// For 5: can get -> 10 // (TODO)
+// For 5: can get -> 10 // (*DONE)
 //                -> 11 // (TODO)
 // For 8: can get -> 16 // (*DONE)
 //                -> 17 // (*DONE)
@@ -234,7 +234,12 @@ Mult09    IS    @
           LOC   8B
 Mult10    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,10            // TODO: replace
+// Strategy 1: Timing = 2u
+//          4ADDU $0,$2,$2            // *= 5
+//          2ADDU $0,$0,0             // *2 => 10
+// Strategy 2: Timing = 2u
+          4ADDU $0,$2,$2            // *= 5
+          SLU   $0,$0,1             // *2 => 10
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
