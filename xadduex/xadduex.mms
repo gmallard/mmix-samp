@@ -44,15 +44,15 @@
 // i:8 Result: 336 == 0x150 (*DONE) (1 instruction)
 // i:9 Result: 378 == 0x17a (*DONE) (1 instruction)
 // i:10 Result: 420 == 0x1a4 (*DONE)
-// i:11 Result: 462 == 0x1ce
+// i:11 Result: 462 == 0x1ce (*DONE)
 // i:12 Result: 504 == 0x1f8
 // i:13 Result: 546 == 0x222
 // i:14 Result: 588 == 0x24c
 // i:15 Result: 630 == 0x276
 // i:16 Result: 672 == 0x2a0 (*DONE) (1 instruction)
 // i:17 Result: 714 == 0x2ca (*DONE) (1 instruction)
-// i:18 Result: 756 == 0x2f4
-// i:19 Result: 798 == 0x31e
+// i:18 Result: 756 == 0x2f4 (*DONE) 
+// i:19 Result: 798 == 0x31e (*DONE) 
 // i:20 Result: 840 == 0x348
 // i:21 Result: 882 == 0x372
 // i:22 Result: 924 == 0x39c
@@ -104,11 +104,11 @@
 // For 4: can get -> 8 // (*DONE)
 //                -> 9 // (*DONE)
 // For 5: can get -> 10 // (*DONE)
-//                -> 11 // (TODO)
+//                -> 11 // (*DONE)
 // For 8: can get -> 16 // (*DONE)
 //                -> 17 // (*DONE)
-// For 9: can get -> 18 // (TODO)
-//                -> 19 // (TODO)
+// For 9: can get -> 18 // (*DONE)
+//                -> 19 // (*DONE)
 // For 16, 17, and 32 the results are beyond the scope of this effort,
 // but could easily be demonstrated.
 
@@ -246,7 +246,9 @@ Mult10    IS    @
           LOC   8B
 Mult11    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,11            // TODO: replace
+// Strategy 1: Timing = 2u
+          4ADDU $0,$2,$2            // *= 5
+          2ADDU $0,$0,$2            // *2 +1 => 11
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
@@ -295,14 +297,16 @@ Mult17    IS    @
           LOC   8B
 Mult18    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,18            // TODO: replace
+          8ADDU $0,$2,$2            // *= 9
+          2ADDU $0,$0,0             // *2 => 18
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
           LOC   8B
 Mult19    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,19            // TODO: replace
+          8ADDU $0,$2,$2            // *= 9
+          2ADDU $0,$0,$2            // *2 +1 => 19
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
