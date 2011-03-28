@@ -40,7 +40,7 @@
 // i:4 Result: 168 == 0xa8 (*DONE) (1 instruction)
 // i:5 Result: 210 == 0xd2 (*DONE) (1 instruction)
 // i:6 Result: 252 == 0xfc (*DONE)
-// i:7 Result: 294 == 0x126
+// i:7 Result: 294 == 0x126 (*DONE)
 // i:8 Result: 336 == 0x150 (*DONE) (1 instruction)
 // i:9 Result: 378 == 0x17a (*DONE) (1 instruction)
 // i:10 Result: 420 == 0x1a4
@@ -99,8 +99,8 @@
 //
 // For 2: can get -> 3 // (*DONE)
 //                -> 4 // (*DONE)
-// For 3: can get -> 6 // (*DONE)
-//                -> 7 // (TODO)
+// For 3: can get -> 6 // (*DONE, 2 instructions)
+//                -> 7 // (*DONE)
 // For 4: can get -> 8 // (*DONE)
 //                -> 9 // (*DONE)
 // For 5: can get -> 10 // (TODO)
@@ -206,7 +206,14 @@ Mult06    IS    @
           LOC   8B
 Mult07    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,7             // TODO: replace
+// Strategy 1: Timing = 2u
+//          2ADDU $0,$2,$2            // *= 3
+//          2ADDU $0,$0,$2            // *2 + 1 ==> 7
+// Strategy 2: Timming = 2u
+          4ADDU $0,$2,$2            // *= 5
+          2ADDU $0,$2,$0            // +2
+// Strategy x:  there are several (I think) other ways of implementing 
+// this.
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
