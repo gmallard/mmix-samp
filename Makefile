@@ -20,6 +20,7 @@ dirs = 	hello \
   memutils \
   morex \
   xadduex \
+  xadduex2 \
 
 .PHONY: $(dirs) clean
 
