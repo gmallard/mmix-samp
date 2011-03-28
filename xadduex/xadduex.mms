@@ -97,8 +97,8 @@
 //
 // Let's consider those one at a time.
 //
-// For 2: can get -> 3 // (*DONE)
-//                -> 4 // (*DONE)
+// For 2: can get -> 4 // (*DONE)
+//                -> 5 // (*DONE)
 // For 3: can get -> 6 // (*DONE, 2 instructions)
 //                -> 7 // (*DONE)
 // For 4: can get -> 8 // (*DONE)
