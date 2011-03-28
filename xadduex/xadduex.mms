@@ -44,23 +44,23 @@
 // i:8 Result: 336 == 0x150 (*DONE) (1 instruction)
 // i:9 Result: 378 == 0x17a (*DONE) (1 instruction)
 // i:10 Result: 420 == 0x1a4 (*DONE)
-// i:11 Result: 462 == 0x1ce
-// i:12 Result: 504 == 0x1f8
-// i:13 Result: 546 == 0x222
+// i:11 Result: 462 == 0x1ce (*DONE)
+// i:12 Result: 504 == 0x1f8 (*DONE)
+// i:13 Result: 546 == 0x222 (*DONE)
 // i:14 Result: 588 == 0x24c
-// i:15 Result: 630 == 0x276
+// i:15 Result: 630 == 0x276 (*DONE)
 // i:16 Result: 672 == 0x2a0 (*DONE) (1 instruction)
 // i:17 Result: 714 == 0x2ca (*DONE) (1 instruction)
-// i:18 Result: 756 == 0x2f4
-// i:19 Result: 798 == 0x31e
-// i:20 Result: 840 == 0x348
-// i:21 Result: 882 == 0x372
+// i:18 Result: 756 == 0x2f4 (*DONE) 
+// i:19 Result: 798 == 0x31e (*DONE) 
+// i:20 Result: 840 == 0x348 (*DONE) 
+// i:21 Result: 882 == 0x372 (*DONE)
 // i:22 Result: 924 == 0x39c
 // i:23 Result: 966 == 0x3c6
-// i:24 Result: 1008 == 0x3f0
-// i:25 Result: 1050 == 0x41a
+// i:24 Result: 1008 == 0x3f0 (*DONE) 
+// i:25 Result: 1050 == 0x41a (*DONE)
 // i:26 Result: 1092 == 0x444
-// i:27 Result: 1134 == 0x46e
+// i:27 Result: 1134 == 0x46e (*DONE)
 // i:28 Result: 1176 == 0x498
 // i:29 Result: 1218 == 0x4c2
 // i:30 Result: 1260 == 0x4ec
@@ -104,13 +104,31 @@
 // For 4: can get -> 8 // (*DONE)
 //                -> 9 // (*DONE)
 // For 5: can get -> 10 // (*DONE)
-//                -> 11 // (TODO)
+//                -> 11 // (*DONE)
 // For 8: can get -> 16 // (*DONE)
 //                -> 17 // (*DONE)
-// For 9: can get -> 18 // (TODO)
-//                -> 19 // (TODO)
+// For 9: can get -> 18 // (*DONE)
+//                -> 19 // (*DONE)
 // For 16, 17, and 32 the results are beyond the scope of this effort,
 // but could easily be demonstrated.
+//
+// Next, implement 'obvious' cases:
+// 4+8 => 12
+// 4+16 => 20
+// 8+16 => 24
+//
+// Next, steal one from Dr. Knuth:
+// => 25
+//
+// Try some results suggested by the output of 'addu-gen.rb', which is
+// included in this project.
+// => 13 (*OK)
+// => 15 (*OK)
+// => 21 (*OK)
+// => 27 (*OK)
+//
+// What is left?
+// 14, 22, 23, 26, 28, 29, 30
 
 // Data - Pattern
           LOC   9B
@@ -246,21 +264,26 @@ Mult10    IS    @
           LOC   8B
 Mult11    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,11            // TODO: replace
+// Strategy 1: Timing = 2u
+          4ADDU $0,$2,$2            // *= 5
+          2ADDU $0,$0,$2            // *2 +1 => 11
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
           LOC   8B
 Mult12    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,12            // TODO: replace
+// Strategy 1: Timing = 2u
+          4ADDU $0,$2,0             // *=4
+          8ADDU $0,$2,$0            // *8 + 4 => 12
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
           LOC   8B
 Mult13    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,13            // TODO: replace
+          2ADDU $0,$2,$2            // *=3
+          4ADDU $0,$0,$2            // *4 + 1 => 13
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
@@ -274,7 +297,8 @@ Mult14    IS    @
           LOC   8B
 Mult15    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,15            // TODO: replace
+          2ADDU $0,$2,$2            // *=3
+          4ADDU $0,$0,$0            // *4 + 3 => 15
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
@@ -295,28 +319,32 @@ Mult17    IS    @
           LOC   8B
 Mult18    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,18            // TODO: replace
+          8ADDU $0,$2,$2            // *= 9
+          2ADDU $0,$0,0             // *2 => 18
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
           LOC   8B
 Mult19    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,19            // TODO: replace
+          8ADDU $0,$2,$2            // *= 9
+          2ADDU $0,$0,$2            // *2 +1 => 19
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
           LOC   8B
 Mult20    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,20            // TODO: replace
+          4ADDU $0,$2,0             // *= 4
+          16ADDU $0,$2,$0           // + *16 => 20
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
           LOC   8B
 Mult21    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,21            // TODO: replace
+          16ADDU $0,$2,$2           // *=17
+          4ADDU $0,$2,$0            // +4 => 21
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
@@ -337,14 +365,16 @@ Mult23    IS    @
           LOC   8B
 Mult24    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,24            // TODO: replace
+          8ADDU $0,$2,0             // *= 8
+          16ADDU $0,$2,$0           // + *16 => 24
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
           LOC   8B
 Mult25    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,25            // TODO: replace
+          4ADDU $0,$2,$2            // *= 5
+          4ADDU $0,$0,$0            // *4 + 1 = 25
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
@@ -358,7 +388,8 @@ Mult26    IS    @
           LOC   8B
 Mult27    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,27            // TODO: replace
+          2ADDU $0,$2,$2            // *=3
+          8ADDU $0,$0,$0            // *=9 => 27
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
