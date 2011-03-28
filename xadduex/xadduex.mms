@@ -53,11 +53,11 @@
 // i:17 Result: 714 == 0x2ca (*DONE) (1 instruction)
 // i:18 Result: 756 == 0x2f4 (*DONE) 
 // i:19 Result: 798 == 0x31e (*DONE) 
-// i:20 Result: 840 == 0x348
+// i:20 Result: 840 == 0x348 (*DONE) 
 // i:21 Result: 882 == 0x372
 // i:22 Result: 924 == 0x39c
 // i:23 Result: 966 == 0x3c6
-// i:24 Result: 1008 == 0x3f0
+// i:24 Result: 1008 == 0x3f0 (*DONE) 
 // i:25 Result: 1050 == 0x41a
 // i:26 Result: 1092 == 0x444
 // i:27 Result: 1134 == 0x46e
@@ -114,6 +114,8 @@
 //
 // Implement 'obvious' cases:
 // 4+8 => 12
+// 4+16 => 20
+// 8+16 => 24
 //
 // Data - Pattern
           LOC   9B
@@ -318,7 +320,8 @@ Mult19    IS    @
           LOC   8B
 Mult20    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,20            // TODO: replace
+          4ADDU $0,$2,0             // *= 4
+          16ADDU $0,$2,$0           // + *16 => 20
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
@@ -346,7 +349,8 @@ Mult23    IS    @
           LOC   8B
 Mult24    IS    @
           SETL  $2,42               // Data
-          MULU  $0,$2,24            // TODO: replace
+          8ADDU $0,$2,0             // *= 8
+          16ADDU $0,$2,$0           // + *16 => 24
           POP   1,0                 // Result in $0
 8H        IS    @
 // Code
