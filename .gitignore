@@ -8,4 +8,8 @@ temp*
 *.listing
 #
 *.map
-
+#
+# Ignore any local files relating to editors, etc.
+#
+.vscode
+.kate*
