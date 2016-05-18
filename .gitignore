@@ -3,10 +3,11 @@
 *.bak
 #
 temp*
-#
+# MMIX object/executables
 *.mmo
-*.listing
-#
+# MMIX listings
+*.lst
+# MMIX listings (alternate)
 *.map
 #
 # Ignore any local files relating to editors, etc.
