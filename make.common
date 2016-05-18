@@ -7,7 +7,8 @@ endif
 MMIXAL = mmixal
 SRC_SUFF = mms
 OBJ_SUFF = mmo
-LST_SUFF = map
+## LST_SUFF = map
+LST_SUFF = lst
 
 all: $(TARG).$(OBJ_SUFF)
 
