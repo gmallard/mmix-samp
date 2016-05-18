@@ -3,9 +3,10 @@
 *.bak
 #
 temp*
-#
+# MMIX object/executables
 *.mmo
-*.listing
-#
+# MMIX listings
+*.lst
+# MMIX listings (alternate)
 *.map
 
