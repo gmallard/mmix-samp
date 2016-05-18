@@ -20,7 +20,7 @@ Main     GETA  $255,String         Address of message
 #
          TETRA #08080808           Bad instruction
          TRAP  0,Halt,0            Exit
-String   BYTE  "Abend Demonstation??",#a,0
+String   BYTE  "Abend Demonsration??",#a,0
 Oct01    OCTA  #01010101010101010101010101010101
 Oct02    OCTA  #02020202020202020202020202020202
 
