@@ -3,26 +3,26 @@
 //
          LOC   #100
 JumpTab  LOC   @
-				 JMP	 SendM1A             // Routine 1
-				 JMP	 SendM2A             // Routine 2
-				 JMP	 SendM3A             // Routine 3
-				 JMP	 SendM4A             // Routine 4
-				 JMP	 SendM5A             // Routine 5
-NumJent  IS    (@-JumpTab)/4			 // Number of entries
+         JMP   SendM1A             // Routine 1
+         JMP   SendM2A             // Routine 2
+         JMP   SendM3A             // Routine 3
+         JMP   SendM4A             // Routine 4
+         JMP   SendM5A             // Routine 5
+NumJent  IS    (@-JumpTab)/4             // Number of entries
 // ------------------------------------------------------------
 Main     LOC   @
          GETA  $255,Starting       // Address of start message
          TRAP  0,Fputs,StdOut      // Write it
 //
-				 SETL  $4,NumJent					 // Entry Count
-				 SETL  $3,0								 // First Routine Index
-				 GETA  $1,JumpTab          // Jump Table Address
-1H  		 SLU   $2,$3,2             // * 4
-         ADDU  $0,$1,$2	           // Point to Table Entry
+         SETL  $4,NumJent                     // Entry Count
+         SETL  $3,0                                 // First Routine Index
+         GETA  $1,JumpTab          // Jump Table Address
+1H       SLU   $2,$3,2             // * 4
+         ADDU  $0,$1,$2               // Point to Table Entry
          GO    $0,$0,0             // Call it
-				 ADDU  $3,$3,1					   // Increment Call Index
-				 SUBU  $4,$4,1             // Decrement Entry Count
-				 PBP   $4,1B               // Loop for all entries
+         ADDU  $3,$3,1                       // Increment Call Index
+         SUBU  $4,$4,1             // Decrement Entry Count
+         PBP   $4,1B               // Loop for all entries
 //
          GETA  $255,Ending         // Address of end message
          TRAP  0,Fputs,StdOut      // Write it
