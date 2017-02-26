@@ -1,103 +1,87 @@
-// Memory Related Utilities
+// Demo Memory Related Utilities
 
 // Start Data Segment
-          LOC   Data_Segment
-          GREG  @                   // Base Register
-9H        IS    @
+         LOC    Data_Segment
+// Base     GREG  9B               // Base Register
+         GREG   @                   // Base Register
+9H       IS     @
+
 // Start Code/Text Segment
-          LOC   #100
-8H        IS    @
+         LOC    #100
+8H       IS     @
+
 // -------------------------------------------------------------------
 // Data
-          LOC   9B
-Blank     OCTA  #20
-String    IS    @
-          BYTE  "1234567890"
-StringLen IS    @-String            // Bytes
-          BYTE  #42 // Eye catcher
-StrB      IS    @
-          BYTE  "1234567890"
-StrBLen   IS    @-String            // Bytes
-          BYTE  #42 // Eye catcher
-          LOC   8*((@+7)/8)         // OCTA Align
-StrBParm  OCTA  StrB                // Address
-          OCTA  StrBLen             // Length
-          OCTA  #20                 // Value
-//
-          LOC   8*((@+7)/8)         // OCTA Align
-String2   IS    @
-          BYTE  "12345678"
-          BYTE  "12345678"
-          BYTE  "12345678"
-          BYTE  "12345678"
-String2Ln IS    (@-String2)/8       // OCTAs
-          BYTE  #42
-//
-          LOC   8*((@+7)/8)         // OCTA Align
-String3   IS    @
-          BYTE  "98765432"
-          BYTE  "98765432"
-String3Ln IS    (@-String3)         // Bytes
-          BYTE  #42
-//
-          LOC   8*((@+7)/8)         // OCTA Align
-ToHere    IS    @
-          OCTA  #0101010101010101
-          OCTA  #0101010101010101
-          OCTA  #0101010101010101
-          OCTA  #0101010101010101
-          BYTE  #42 // Eye catcher
-//
-          LOC   8*((@+7)/8)         // OCTA Align
-String4   IS    @
-          BYTE  "13572468"
-          BYTE  "13572468"
-          BYTE  "13572468"
-          BYTE  "13572468"
-String4Ln IS    (@-String4)/8       // OCTAs
-          BYTE  #42
-//
-          LOC   8*((@+7)/8)         // OCTA Align
-ToHere2   IS    @
-          OCTA  #0202020202020202
-          OCTA  #0202020202020202
-          OCTA  #0202020202020202
-          OCTA  #0202020202020202
-          BYTE  #42 // Eye catcher
-9H        IS    @
+         LOC    9B
+// Data for Set Bytes
+ToByteDA BYTE   #bb,#bb,#bb,#bb,#bb,#bb,#bb,#bb
+         BYTE   #bb,#bb,#bb,#bb,#bb,#bb,#bb,#bb
+         BYTE   #bb,#bb,#bb,#bb,#bb,#bb,#bb,#bb
+         BYTE   #bb,#bb,#bb,#bb,#bb
+ToByteDE IS     @
+         LOC    @+(8-@)&7 // OCTA Align
+         BYTE   "Z","Z","Z","Z","Z","Z","Z","Z" // Eye catcher (0x5a)
+// Set parms
+SBParms  OCTA   ToByteDA
+         OCTA   (ToByteDE-ToByteDA)/1 // Byte Count
+         OCTA   #11         
+
+// Data for Set Wydes
+ToWydeDA WYDE   #dddd,#dddd,#dddd,#dddd,#dddd
+ToWydeDE IS     @
+         LOC    @+(8-@)&7 // OCTA Align
+         BYTE   "Z","Z","Z","Z","Z","Z","Z","Z" // Eye catcher (0x5a)
+// Set parms
+SWParms  OCTA   ToWydeDA
+         OCTA   (ToWydeDE-ToWydeDA)/2 // Wyde Count
+         OCTA   #2222
+
+// Data for Set Tetras
+ToTetrDA TETRA  #eeeeeeee,#eeeeeeee,#eeeeeeee,#eeeeeeee
+ToTetrDE IS     @
+         LOC    @+(8-@)&7 // OCTA Align
+         BYTE   "Z","Z","Z","Z","Z","Z","Z","Z" // Eye catcher (0x5a)
+// Set parms
+STParms  OCTA   ToTetrDA
+         OCTA   (ToTetrDE-ToTetrDA)/4 // Tetra Count
+         OCTA   #33333333
+
+// Data for Set Octas
+ToOctaDA OCTA   #ffffffffffffffff,#ffffffffffffffff
+         OCTA   #ffffffffffffffff,#ffffffffffffffff
+         OCTA   #ffffffffffffffff,#ffffffffffffffff
+         OCTA   #ffffffffffffffff
+ToOctaDE IS     @
+         LOC    @+(8-@)&7 // OCTA Align
+         BYTE   "Z","Z","Z","Z","Z","Z","Z","Z" // Eye catcher (0x5a)
+// Set parms
+SOParms  OCTA   ToOctaDA
+         OCTA   (ToOctaDE-ToOctaDA)/8 // Octa Count
+         OCTA   #4444444444444444
+
+// -------------------------------------------------------------------
 // Code
-          LOC   8B
-Main      IS    @
-//
-          LDA   $8,String           // Address
-          SETL  $9,StringLen        // Length
-          LDOU  $10,Blank           // Set Value
-          PUSHJ $7,MemSet           // Call Set
-//
-          LDA   $8,String           // Address
-          SETL  $9,StringLen        // Length
-          SETL  $10,#ff             // Set Value
-          PUSHJ $7,MemSet           // Call Set
-//
-          LDA   $8,String2          // Address
-          SETL  $9,String2Ln        // OCTA Count
-          SETL  $10,#2020           // Set Value
-          ORML  $10,#2020           // Set Value
-          ORMH  $10,#2020           // Set Value
-          ORH   $10,#2020           // Set Value
-          PUSHJ $7,MemSetOct        // Call Set
-//
-          LDA   $8,ToHere           // To address
-          LDA   $9,String3          // From Address
-          SETL  $10,String3Ln       // Byte Count
-          PUSHJ $7,MemCpy           // Call copy
-//
-          LDA   $8,ToHere2          // To address
-          LDA   $9,String4          // From Address
-          SETL  $10,String4Ln       // OCTA Count
-          PUSHJ $7,MemCpyOct        // Call copy
-//
-          TRAP  0,Halt,0            // Exit
-8H        IS    @
+         LOC    8B
+Main     IS     @
+//****
+//       Set Bytes
+         LDA    $8,SBParms          // Parms address
+         PUSHJ  $7,MemSetByt        // Call Set Bytes
+//****   
+//       Set Wydes
+         LDA    $8,SWParms          // Parms address
+         PUSHJ  $7,MemSetWyd        // Call Set Wydes
+//****         
+//       Set Tetras
+         LDA    $8,STParms          // Parms address
+         PUSHJ  $7,MemSetTet        // Call Set Tetras
+//****         
+//       Set Octas
+         LDA    $8,SOParms          // Parms address
+         PUSHJ  $7,MemSetOct        // Call Set Octas
+//****         
+// Retrun to OS
+         TRAP   0,Halt,0          // Exit
+8H       IS     @
 //
 

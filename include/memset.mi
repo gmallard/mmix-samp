@@ -2,66 +2,78 @@
 // Memory Set Utilities
 // -------------------------------------------------------------------
           LOC   8B
-MemSet    IS    @
+MemSetByt IS    @
 // Set memory to a given value.  A crude byte-by-byte implementation.
 //
-// $0 => Start Address
-// $1 => Length (byte count)
-// $2 => Replacement Byte
-0H        STBU  $2,$0,0           // Set byte to value
-          ADDU  $0,$0,1           // Increment Output Addr
-          SUBU  $1,$1,1           // Decrement count
-          PBP   $1,0B             // Loop for all
-          POP   0,0               // Return
-8H        IS    @
-// -------------------------------------------------------------------
-          LOC   8B
-MemSetB   IS    @
-// Set memory to a given value.  A crude byte-by-byte implementation.
+// $0 => Address of Parms
+// Parms+0 - Address to set
+// Parms+8 - Length to set (byte count)
+// Parms+16 - Value (low byte)
+          LDOU  $1,$0             // To Address
+          LDOU  $2,$0,8           // Length
+          LDOU  $3,$0,16          // Value
 //
-// $0 => Parameter Address
+0H        STBU  $3,$1,0           // Set byte to value
+          ADDU  $1,$1,1           // Incr To Address
+          SUBU  $2,$2,1           // Decrement Count
+          PBP   $2,0B             // Loop for all
           POP   0,0               // Return
 8H        IS    @
 // -------------------------------------------------------------------
           LOC   8B
 MemSetWyd IS    @
-// Set memory WYDE's to a given value.
+// Set memory to a given value.  A wyde-by-wyde implementation.
 //
-// $0 => Start Address (WYDE ALigned)
-// $1 => Length (in WYDEs)
-// $2 => Replacement Value (All 2 bytes)
-0H        STWU  $2,$0,0           // Set WYDE to value
-          ADDU  $0,$0,2           // Increment Output Addr
-          SUBU  $1,$1,1           // Decrement count
-          PBP   $1,0B             // Loop for all
+// $0 => Address of Parms
+// Parms+0 - Address to set
+// Parms+8 - Length to set (wyde count)
+// Parms+16 - Value (low wyde)
+          LDOU  $1,$0             // To Address
+          LDOU  $2,$0,8           // Length
+          LDOU  $3,$0,16          // Value
+//
+0H        STWU  $3,$1,0           // Set wyde to value
+          ADDU  $1,$1,2           // Incr To Address
+          SUBU  $2,$2,1           // Decrement Count
+          PBP   $2,0B             // Loop for all
           POP   0,0               // Return
 8H        IS    @
 // -------------------------------------------------------------------
           LOC   8B
 MemSetTet IS    @
-// Set memory TETRA's to a given value.
+// Set memory to a given value.  A tetra-by-tetra implementation.
 //
-// $0 => Start Address (TETRA ALigned)
-// $1 => Length (in TETRAs)
-// $2 => Replacement Value (All 4 bytes)
-0H        STTU  $2,$0,0           // Set TETRA to value
-          ADDU  $0,$0,4           // Increment Output Addr
-          SUBU  $1,$1,1           // Decrement count
-          PBP   $1,0B             // Loop for all
+// $0 => Address of Parms
+// Parms+0 - Address to set
+// Parms+8 - Length to set (tetra count)
+// Parms+16 - Value (low tetra)
+          LDOU  $1,$0             // To Address
+          LDOU  $2,$0,8           // Length
+          LDOU  $3,$0,16          // Value
+//
+0H        STTU  $3,$1,0           // Set tetra to value
+          ADDU  $1,$1,4           // Incr To Address
+          SUBU  $2,$2,1           // Decrement Count
+          PBP   $2,0B             // Loop for all
           POP   0,0               // Return
 8H        IS    @
 // -------------------------------------------------------------------
           LOC   8B
 MemSetOct IS    @
-// Set memory OCTA's to a given value.
+// Set memory to a given value.  A octa-by-octa implementation.
 //
-// $0 => Start Address (OCTA ALigned)
-// $1 => Length (in OCTAs)
-// $2 => Replacement Value (All 8 bytes)
-0H        STOU  $2,$0,0           // Set OCTA to value
-          ADDU  $0,$0,8           // Increment Output Addr
-          SUBU  $1,$1,1           // Decrement count
-          PBP   $1,0B             // Loop for all
+// $0 => Address of Parms
+// Parms+0 - Address to set
+// Parms+8 - Length to set (octa count)
+// Parms+16 - Value (octa)
+          LDOU  $1,$0             // To Address
+          LDOU  $2,$0,8           // Length
+          LDOU  $3,$0,16          // Value
+//
+0H        STOU  $3,$1,0           // Set octa to value
+          ADDU  $1,$1,8           // Incr To Address
+          SUBU  $2,$2,1           // Decrement Count
+          PBP   $2,0B             // Loop for all
           POP   0,0               // Return
 8H        IS    @
 
