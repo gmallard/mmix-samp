@@ -1,0 +1,83 @@
+// -------------------------------------------------------------------
+// Memory Copy Utilities
+// -------------------------------------------------------------------
+          LOC   8B
+MemCpy    IS    @
+// Copy memory, byte-by-byte.
+//
+// $0 => To Address
+// $1 => From Address
+// $2 => Length (byte count)
+0H        LDBU  $3,$1,0           // Get From Byte
+          STBU  $3,$0,0           // Store it
+          ADDU  $0,$0,1           // Increment To Addr
+          ADDU  $1,$1,1           // Increment From Addr
+//
+          SUBU  $2,$2,1           // Decrement byte count
+          PBP   $2,0B             // Loop for all
+          POP   0,0               // Return
+8H        IS    @
+// -------------------------------------------------------------------
+          LOC   8B
+MemCpyWyd IS    @
+// Copy memory, WYDE-by-WYDE
+//
+// $0 => To Address (WYDE aligned)
+// $1 => From Address (WYDE aligned)
+// $2 => Length (WYDE count)
+//
+// Programming Note:  If the to and/or from address is _not_ WYDE
+// aligned, this routine will silently corrupt some part of the 
+// caller's memory space.  Let the caller beware!
+0H        LDWU  $3,$1,0           // Get From WYDE
+          STWU  $3,$0,0           // Store it
+          ADDU  $0,$0,2           // Increment To Addr
+          ADDU  $1,$1,2           // Increment From Addr
+//
+          SUBU  $2,$2,1           // Decrement WYDE count
+          PBP   $2,0B             // Loop for all
+          POP   0,0               // Return
+8H        IS    @
+// -------------------------------------------------------------------
+          LOC   8B
+MemCpyTet IS    @
+// Copy memory, TETRA-by-TETRA
+//
+// $0 => To Address (TETRA aligned)
+// $1 => From Address (TETRA aligned)
+// $2 => Length (TETRA count)
+//
+// Programming Note:  If the to and/or from address is _not_ TETRA
+// aligned, this routine will silently corrupt some part of the 
+// caller's memory space.  Let the caller beware!
+0H        LDTU  $3,$1,0           // Get From TETRA
+          STTU  $3,$0,0           // Store it
+          ADDU  $0,$0,4           // Increment To Addr
+          ADDU  $1,$1,4           // Increment From Addr
+//
+          SUBU  $2,$2,1           // Decrement TETRA count
+          PBP   $2,0B             // Loop for all
+          POP   0,0               // Return
+8H        IS    @
+// -------------------------------------------------------------------
+          LOC   8B
+MemCpyOct IS    @
+// Copy memory, OCTA-by-OCTA
+//
+// $0 => To Address (OCTA aligned)
+// $1 => From Address (OCTA aligned)
+// $2 => Length (OCTA count)
+//
+// Programming Note:  If the to and/or from address is _not_ OCTA
+// aligned, this routine will silently corrupt some part of the 
+// caller's memory space.  Let the caller beware!
+0H        LDOU  $3,$1,0           // Get From OCTA
+          STOU  $3,$0,0           // Store it
+          ADDU  $0,$0,8           // Increment To Addr
+          ADDU  $1,$1,8           // Increment From Addr
+//
+          SUBU  $2,$2,1           // Decrement OCTA count
+          PBP   $2,0B             // Loop for all
+          POP   0,0               // Return
+8H        IS    @
+

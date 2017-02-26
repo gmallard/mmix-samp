@@ -1,0 +1,59 @@
+// -------------------------------------------------------------------
+// Memory Set Utilities
+// -------------------------------------------------------------------
+          LOC   8B
+MemSet    IS    @
+// Set memory to a given value.  A crude byte-by-byte implementation.
+//
+// $0 => Start Address
+// $1 => Length (byte count)
+// $2 => Replacement Byte
+0H        STBU  $2,$0,0           // Set byte to value
+          ADDU  $0,$0,1           // Increment Output Addr
+          SUBU  $1,$1,1           // Decrement count
+          PBP   $1,0B             // Loop for all
+          POP   0,0               // Return
+8H        IS    @
+// -------------------------------------------------------------------
+          LOC   8B
+MemSetWyd IS    @
+// Set memory WYDE's to a given value.
+//
+// $0 => Start Address (WYDE ALigned)
+// $1 => Length (in WYDEs)
+// $2 => Replacement Value (All 2 bytes)
+0H        STWU  $2,$0,0           // Set WYDE to value
+          ADDU  $0,$0,2           // Increment Output Addr
+          SUBU  $1,$1,1           // Decrement count
+          PBP   $1,0B             // Loop for all
+          POP   0,0               // Return
+8H        IS    @
+// -------------------------------------------------------------------
+          LOC   8B
+MemSetTet IS    @
+// Set memory TETRA's to a given value.
+//
+// $0 => Start Address (TETRA ALigned)
+// $1 => Length (in TETRAs)
+// $2 => Replacement Value (All 4 bytes)
+0H        STTU  $2,$0,0           // Set TETRA to value
+          ADDU  $0,$0,4           // Increment Output Addr
+          SUBU  $1,$1,1           // Decrement count
+          PBP   $1,0B             // Loop for all
+          POP   0,0               // Return
+8H        IS    @
+// -------------------------------------------------------------------
+          LOC   8B
+MemSetOct IS    @
+// Set memory OCTA's to a given value.
+//
+// $0 => Start Address (OCTA ALigned)
+// $1 => Length (in OCTAs)
+// $2 => Replacement Value (All 8 bytes)
+0H        STOU  $2,$0,0           // Set OCTA to value
+          ADDU  $0,$0,8           // Increment Output Addr
+          SUBU  $1,$1,1           // Decrement count
+          PBP   $1,0B             // Loop for all
+          POP   0,0               // Return
+8H        IS    @
+
