@@ -15,6 +15,14 @@ String    IS    @
           BYTE  "1234567890"
 StringLen IS    @-String            // Bytes
           BYTE  #42 // Eye catcher
+StrB      IS    @
+          BYTE  "1234567890"
+StrBLen   IS    @-String            // Bytes
+          BYTE  #42 // Eye catcher
+          LOC   8*((@+7)/8)         // OCTA Align
+StrBParm  OCTA  StrB                // Address
+          OCTA  StrBLen             // Length
+          OCTA  #20                 // Value
 //
           LOC   8*((@+7)/8)         // OCTA Align
 String2   IS    @

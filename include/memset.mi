@@ -16,6 +16,14 @@ MemSet    IS    @
 8H        IS    @
 // -------------------------------------------------------------------
           LOC   8B
+MemSetB   IS    @
+// Set memory to a given value.  A crude byte-by-byte implementation.
+//
+// $0 => Parameter Address
+          POP   0,0               // Return
+8H        IS    @
+// -------------------------------------------------------------------
+          LOC   8B
 MemSetWyd IS    @
 // Set memory WYDE's to a given value.
 //

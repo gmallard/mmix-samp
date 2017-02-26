@@ -21,4 +21,3 @@ done
 #
 mmixal -l $lst -o $obj $src
 cp $src.save $src
-
