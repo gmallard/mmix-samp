@@ -28,18 +28,25 @@ Main      IS    @
 
 // Code
           LOC   8B
+// The immediate form MOR $X,$Y,Z always sets the leading seven
+// bytes of register X to zero; the other byte is set to the
+// bitwise or of whatever bytes of register Y are specified by
+// the immediate operand Z.)
 NZZDISP   IS    @
           LDOU  $2,SEQBYTEM
-          MOR   $3,$2,#01
-          MOR   $4,$2,#03
-          MOR   $5,$2,#ff
-          MOR   $6,$2,#fe
+          MOR   $3,$2,#01          // -> #08
+          MOR   $4,$2,#03          // -> #0f (#07 | #08)
+          MOR   $5,$2,#ff          // -> #0f (#01 | ... | #08)
+          MOR   $6,$2,#fe          // -> #07 (#01 | ... | #07) 
           POP   0,0
 8H        IS    @
 
 // -------------------------------------------------------------------
 // Data
           LOC   9B
+// The bits in the mask bytes ($Z) specify which bytes to use from
+// the $Y field.  This example is just a 'copy' of all the bytes
+// from $Y (#01020304050607f8)
 BYTECOPYM OCTA  #8040201008040201  // Straight extract
 BYTEMTEST OCTA  #01020304050607f8  // Data
 9H        IS    @
@@ -50,8 +57,8 @@ BCOPYDISP IS    @
 # -----------------------------------
           LDOU   $1,BYTECOPYM   // Byte copy mask
           LDOU   $2,BYTEMTEST   // Test Pattern
-          MOR    $3,$2,$1       // MOR
-          MXOR   $4,$2,$1       // MXOR (S/B Same)
+          MOR    $3,$2,$1       // MOR: -> #01020304050607f8
+          MXOR   $4,$2,$1       // MXOR (Also) -> #01020304050607f8
           POP   0,0
 8H        IS    @
 
@@ -66,8 +73,8 @@ BYTE2LOWM OCTA  #8040201008040202  // Two low bytes
 LOW2BDISP IS    @
           LDOU  $1,BYTE2LOWM   // Byte copy mask
           LDOU  $2,BYTECOPYM   // Test Pattern from old mask
-          MOR   $3,$2,$1       // MOR
-          MXOR  $4,$2,$1       // MXOR (S/B Same)
+          MOR   $3,$2,$1       // MOR -> #8040201008040202
+          MXOR  $4,$2,$1       // MXOR (Also) -> #8040201008040202
           POP   0,0
 8H        IS    @
 
