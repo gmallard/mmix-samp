@@ -18,4 +18,6 @@ temp*
 # include system temporaries
 #
 *.incsave
+# Assemble check directory
+tasm*
 
