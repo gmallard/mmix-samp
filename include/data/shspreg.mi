@@ -1,0 +1,172 @@
+// Start Data Segment
+        LOC    9B
+//
+// Special Register Data
+//
+//----------------------------------------
+rAData  WYDE 21 // Special Register ID
+ BYTE "rA "      // Special Register Name
+ BYTE "arithmetic status register",#a,0
+//----------------------------------------
+rBData  WYDE 0 // Special Register ID
+ BYTE "rB "      // Special Register Name
+ BYTE "bootstrap register (trip)",#a,0
+//----------------------------------------
+rCData  WYDE 8 // Special Register ID
+ BYTE "rC "      // Special Register Name
+ BYTE "continuation register",#a,0
+//----------------------------------------
+rDData  WYDE 1 // Special Register ID
+ BYTE "rD "      // Special Register Name
+ BYTE "dividend register",#a,0
+//----------------------------------------
+rEData  WYDE 2 // Special Register ID
+ BYTE "rE "      // Special Register Name
+ BYTE "epsilon register",#a,0
+//----------------------------------------
+rFData  WYDE 22 // Special Register ID
+ BYTE "rF "      // Special Register Name
+ BYTE "failure location register",#a,0
+//----------------------------------------
+rGData  WYDE 19 // Special Register ID
+ BYTE "rG "      // Special Register Name
+ BYTE "global threshold register",#a,0
+//----------------------------------------
+rHData  WYDE 3 // Special Register ID
+ BYTE "rH "      // Special Register Name
+ BYTE "himult register",#a,0
+//----------------------------------------
+rIData  WYDE 12 // Special Register ID
+ BYTE "rI "      // Special Register Name
+ BYTE "interval counter",#a,0
+//----------------------------------------
+rJData  WYDE 4 // Special Register ID
+ BYTE "rJ "      // Special Register Name
+ BYTE "return-jump register",#a,0
+//----------------------------------------
+rKData  WYDE 15 // Special Register ID
+ BYTE "rK "      // Special Register Name
+ BYTE "interrupt mask register",#a,0
+//----------------------------------------
+rLData  WYDE 20 // Special Register ID
+ BYTE "rL "      // Special Register Name
+ BYTE "local threshold register",#a,0
+//----------------------------------------
+rMData  WYDE 5 // Special Register ID
+ BYTE "rM "      // Special Register Name
+ BYTE "multiplex mask register",#a,0
+//----------------------------------------
+rNData  WYDE 9 // Special Register ID
+ BYTE "rN "      // Special Register Name
+ BYTE "serial number",#a,0
+//----------------------------------------
+rOData  WYDE 10 // Special Register ID
+ BYTE "rO "      // Special Register Name
+ BYTE "register stack offset",#a,0
+//----------------------------------------
+rPData  WYDE 23 // Special Register ID
+ BYTE "rP "      // Special Register Name
+ BYTE "prediction register",#a,0
+//----------------------------------------
+rQData  WYDE 16 // Special Register ID
+ BYTE "rQ "      // Special Register Name
+ BYTE "interrupt request register",#a,0
+//----------------------------------------
+rRData  WYDE 6 // Special Register ID
+ BYTE "rR "      // Special Register Name
+ BYTE "remainder register",#a,0
+//----------------------------------------
+rSData  WYDE 11 // Special Register ID
+ BYTE "rS "      // Special Register Name
+ BYTE "register stack pointer",#a,0
+//----------------------------------------
+rTData  WYDE 13 // Special Register ID
+ BYTE "rT "      // Special Register Name
+ BYTE "trap address register",#a,0
+//----------------------------------------
+rUData  WYDE 17 // Special Register ID
+ BYTE "rU "      // Special Register Name
+ BYTE "usage counter",#a,0
+//----------------------------------------
+rVData  WYDE 18 // Special Register ID
+ BYTE "rV "      // Special Register Name
+ BYTE "virtual translation register",#a,0
+//----------------------------------------
+rWData  WYDE 24 // Special Register ID
+ BYTE "rW "      // Special Register Name
+ BYTE "where-interrupted register (trip)",#a,0
+//----------------------------------------
+rXData  WYDE 25 // Special Register ID
+ BYTE "rX "      // Special Register Name
+ BYTE "execution register (trip)",#a,0
+//----------------------------------------
+rYData  WYDE 26 // Special Register ID
+ BYTE "rY "      // Special Register Name
+ BYTE "Y operand (trip)",#a,0
+//----------------------------------------
+rZData  WYDE 27 // Special Register ID
+ BYTE "rZ "      // Special Register Name
+ BYTE "Z operand (trip)",#a,0
+//----------------------------------------
+rBBData  WYDE 7 // Special Register ID
+ BYTE "rBB"      // Special Register Name
+ BYTE "bootstrap register (trap)",#a,0
+//----------------------------------------
+rTTData  WYDE 14 // Special Register ID
+ BYTE "rTT"      // Special Register Name
+ BYTE "dynamic trap address register",#a,0
+//----------------------------------------
+rWWData  WYDE 28 // Special Register ID
+ BYTE "rWW"      // Special Register Name
+ BYTE "where-interrupted register (trap)",#a,0
+//----------------------------------------
+rXXData  WYDE 29 // Special Register ID
+ BYTE "rXX"      // Special Register Name
+ BYTE "execution register (trap)",#a,0
+//----------------------------------------
+rYYData  WYDE 30 // Special Register ID
+ BYTE "rYY"      // Special Register Name
+ BYTE "Y operand (trap)",#a,0
+//----------------------------------------
+rZZData  WYDE 31 // Special Register ID
+ BYTE "rZZ"      // Special Register Name
+ BYTE "Z operand (trap)",#a,0
+//
+// Special Register Data Addresses
+//
+          LOC    @+(8-@)&7 // OCTA Align
+          GREG   @
+SPREGDAT OCTA rAData   // rA register data addr
+ OCTA rBData   // rB register data addr
+ OCTA rCData   // rC register data addr
+ OCTA rDData   // rD register data addr
+ OCTA rEData   // rE register data addr
+ OCTA rFData   // rF register data addr
+ OCTA rGData   // rG register data addr
+ OCTA rHData   // rH register data addr
+ OCTA rIData   // rI register data addr
+ OCTA rJData   // rJ register data addr
+ OCTA rKData   // rK register data addr
+ OCTA rLData   // rL register data addr
+ OCTA rMData   // rM register data addr
+ OCTA rNData   // rN register data addr
+ OCTA rOData   // rO register data addr
+ OCTA rPData   // rP register data addr
+ OCTA rQData   // rQ register data addr
+ OCTA rRData   // rR register data addr
+ OCTA rSData   // rS register data addr
+ OCTA rTData   // rT register data addr
+ OCTA rUData   // rU register data addr
+ OCTA rVData   // rV register data addr
+ OCTA rWData   // rW register data addr
+ OCTA rXData   // rX register data addr
+ OCTA rYData   // rY register data addr
+ OCTA rZData   // rZ register data addr
+ OCTA rBBData   // rBB register data addr
+ OCTA rTTData   // rTT register data addr
+ OCTA rWWData   // rWW register data addr
+ OCTA rXXData   // rXX register data addr
+ OCTA rYYData   // rYY register data addr
+ OCTA rZZData   // rZZ register data addr
+SPGREGLN IS (@-SPREGDAT)/8 // Register data count
+9H        IS    @

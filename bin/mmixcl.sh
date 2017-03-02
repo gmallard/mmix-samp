@@ -10,7 +10,7 @@
 fn=$(basename $PWD)
 obj=$fn.mmo
 lst=$fn.lst
-incs=$fn.incsave
+fnw=$fn.work
+incsave=$fn.incsave
 #
-rm $obj $lst $incs 2>/dev/null
-
+rm $obj $lst $fnw $incsave 2>/dev/null
