@@ -18,12 +18,35 @@ $(TARG).$(OBJ_SUFF):$(TARG).$(SRC_SUFF)
 
 allinc: cops $(TARG).$(OBJ_SUFF) cback
 
-cops:
+cops: copbeg copdata catsrc copcode mvcode
+
+copbeg:
 	cp $(TARG).$(SRC_SUFF) $(TARG).$(INC_SUFF)
-	@for f in $$(cat $(INC_FILE)); do \
+	cp $(MMIX_INC)/prefix.mms $(TARG).work
+
+catsrc:
+	cat $(TARG).$(SRC_SUFF) >> $(TARG).work
+
+mvcode:
+	mv $(TARG).work $(TARG).$(SRC_SUFF)
+
+copdata:
+	if [ -e $(TARG).incdata ]; \
+	then \
+	for f in $$(cat $(TARG).incdata); do \
+	echo $(MMIX_INCDATA)/$$f; \
+	cat $(MMIX_INCDATA)/$$f >> $(TARG).work; \
+	done; \
+	fi
+
+copcode:
+	if [ -e $(TARG).includes ]; \
+	then \
+	for f in $$(cat $(TARG).includes); do \
 	echo $(MMIX_INC)/$$f; \
-	cat $(MMIX_INC)/$$f >> $(TARG).$(SRC_SUFF); \
-	done
+	cat $(MMIX_INC)/$$f >> $(TARG).work; \
+	done; \
+	fi
 
 cback:
 	cp $(TARG).$(INC_SUFF) $(TARG).$(SRC_SUFF)
