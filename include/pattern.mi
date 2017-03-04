@@ -1,0 +1,8 @@
+          LOC    8B                 // Code start
+//
+PATTERNC  IS     @
+          GETA  $255,String         // Point to String
+          TRAP  0,Fputs,StdOut      // Write it
+          POP    0,0                // Return to caller
+String    BYTE   "Hello World",#a,0 // String
+8H        IS     @                  // Code end
