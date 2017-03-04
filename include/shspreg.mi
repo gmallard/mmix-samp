@@ -3,7 +3,7 @@
 osreg     IS     $255          
 // -------------------------------------------------------------------
 SHSPREGS  IS     @
-          GET    R8,rJ               // Return address
+          GET    $8,rJ               // Return address
           LDOU   $12,LOWNYBS         // Load Low Nyble Mask
           LDA    $11,HEXTRTABL       // Point to XLATE table
           LDA    $15,SPREGDAT        // Adress of register addresses
@@ -19,7 +19,7 @@ SHSPREGS  IS     @
 // Isolate the nybles
           AND    $1,$1,$12           // And out Data (get LowNybs)
           AND    $2,$2,$12           // And out Data (get HiNybs)
-          ADDU   $3,$13,SRVALBEG     // Point to start of area
+          ADDU   $3,$13,SRADDRO      // Point to start of area
           SETL   $6,8                // Loop count
           LDOU   $10,BYTELODMS       // Byte 0 mask
 1H        IS     @
@@ -37,7 +37,7 @@ SHSPREGS  IS     @
           SUBU   $6,$6,1             // Decr loop count
           PBP    $6,1B               // Loop for all bytes
           //
-          ADDU   osreg,$13,SRNAME    // Point to text area
+          ADDU   osreg,$13,SRVNAME   // Point to text area
           TRAP   0,Fputs,StdOut      // Write it
 // Loop end
           ADDU   $15,$15,8           // Point to next pointer
