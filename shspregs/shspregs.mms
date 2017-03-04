@@ -5,7 +5,7 @@
 LOWNYBS   OCTA   #0f0f0f0f0f0f0f0f
 HEXTRTABL BYTE   "0123456789abcdef"
 DUMMYDATA OCTA   #1234567890abcdef
-BYTELODMS OCTA   #0000000000000008
+BYTELODMS OCTA   #0000000000000080
 9H        IS     @
 // -------------------------------------------------------------------
 // Code
