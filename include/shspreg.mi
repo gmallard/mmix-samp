@@ -1,8 +1,12 @@
 // Code
           LOC    8B
+// -------------------------------------------------------------------
 osreg     IS     $255          
 // -------------------------------------------------------------------
 SHSPREGS  IS     @
+          SET    $0,#cafe
+          SET    $1,#babe
+          SET    $2,#bad1
           GET    $8,rJ               // Return address
           LDOU   $12,LOWNYBS         // Load Low Nyble Mask
           LDA    $11,HEXTRTABL       // Point to XLATE table
@@ -11,8 +15,11 @@ SHSPREGS  IS     @
 0H        IS     @ 
           LDOU   $13,$15             // Get Address of Reg Data
 //
-          PUSHJ  $16,GETREG          // Get special register value
-          LDOU $0,DUMMYDATA // *TEMP*
+          LDWU   $9,$13,0            // Get special register number
+          GETA   $10,GETREG          // Load address
+          STWU   $9,$10,2            // Save Reg number
+GETREG    GET    $0,rS               // Pattern GET
+          // PUSHJ  $16,GETREG          // Get special register value
           SET    $1,$0               // Copy value
           SET    $2,$0               // Copy Again
           SRU    $2,$2,4             // Hi Order Nyb -> Low Order
@@ -46,8 +53,4 @@ SHSPREGS  IS     @
 // Return to caller
           PUT   rJ,$8                // Set Ret Addr
           POP   0,0
-//
-GETREG    GET   $0,rS
-          POP   1,0                 // Return 1 result (will be in $0)
-GETREGSR  IS    GETREG+2            // Special Register Code Number
 8H        IS    @

@@ -1,3 +1,4 @@
+          LOC   9B
 //
 // Special Register Data
 //
@@ -5,193 +6,193 @@
 rAData  WYDE 21 // Special Register ID
 rANM    BYTE "rA "      // Special Register Name
 rABLKS  BYTE "     "
-rAADR   BYTE "#1234567812345678 : "
+rAADR   BYTE "#________________ : "
 rADESC  BYTE  "arithmetic status register",#a,0
 //----------------------------------------
 rBData  WYDE 0 // Special Register ID
 rBNM    BYTE "rB "      // Special Register Name
 rBBLKS  BYTE "     "
-rBADR   BYTE "#1234567812345678 : "
+rBADR   BYTE "#________________ : "
 rBDESC  BYTE  "bootstrap register (trip)",#a,0
 //----------------------------------------
 rCData  WYDE 8 // Special Register ID
 rCNM    BYTE "rC "      // Special Register Name
 rCBLKS  BYTE "     "
-rCADR   BYTE "#1234567812345678 : "
+rCADR   BYTE "#________________ : "
 rCDESC  BYTE  "continuation register",#a,0
 //----------------------------------------
 rDData  WYDE 1 // Special Register ID
 rDNM    BYTE "rD "      // Special Register Name
 rDBLKS  BYTE "     "
-rDADR   BYTE "#1234567812345678 : "
+rDADR   BYTE "#________________ : "
 rDDESC  BYTE  "dividend register",#a,0
 //----------------------------------------
 rEData  WYDE 2 // Special Register ID
 rENM    BYTE "rE "      // Special Register Name
 rEBLKS  BYTE "     "
-rEADR   BYTE "#1234567812345678 : "
+rEADR   BYTE "#________________ : "
 rEDESC  BYTE  "epsilon register",#a,0
 //----------------------------------------
 rFData  WYDE 22 // Special Register ID
 rFNM    BYTE "rF "      // Special Register Name
 rFBLKS  BYTE "     "
-rFADR   BYTE "#1234567812345678 : "
+rFADR   BYTE "#________________ : "
 rFDESC  BYTE  "failure location register",#a,0
 //----------------------------------------
 rGData  WYDE 19 // Special Register ID
 rGNM    BYTE "rG "      // Special Register Name
 rGBLKS  BYTE "     "
-rGADR   BYTE "#1234567812345678 : "
+rGADR   BYTE "#________________ : "
 rGDESC  BYTE  "global threshold register",#a,0
 //----------------------------------------
 rHData  WYDE 3 // Special Register ID
 rHNM    BYTE "rH "      // Special Register Name
 rHBLKS  BYTE "     "
-rHADR   BYTE "#1234567812345678 : "
+rHADR   BYTE "#________________ : "
 rHDESC  BYTE  "himult register",#a,0
 //----------------------------------------
 rIData  WYDE 12 // Special Register ID
 rINM    BYTE "rI "      // Special Register Name
 rIBLKS  BYTE "     "
-rIADR   BYTE "#1234567812345678 : "
+rIADR   BYTE "#________________ : "
 rIDESC  BYTE  "interval counter",#a,0
 //----------------------------------------
 rJData  WYDE 4 // Special Register ID
 rJNM    BYTE "rJ "      // Special Register Name
 rJBLKS  BYTE "     "
-rJADR   BYTE "#1234567812345678 : "
+rJADR   BYTE "#________________ : "
 rJDESC  BYTE  "return-jump register",#a,0
 //----------------------------------------
 rKData  WYDE 15 // Special Register ID
 rKNM    BYTE "rK "      // Special Register Name
 rKBLKS  BYTE "     "
-rKADR   BYTE "#1234567812345678 : "
+rKADR   BYTE "#________________ : "
 rKDESC  BYTE  "interrupt mask register",#a,0
 //----------------------------------------
 rLData  WYDE 20 // Special Register ID
 rLNM    BYTE "rL "      // Special Register Name
 rLBLKS  BYTE "     "
-rLADR   BYTE "#1234567812345678 : "
+rLADR   BYTE "#________________ : "
 rLDESC  BYTE  "local threshold register",#a,0
 //----------------------------------------
 rMData  WYDE 5 // Special Register ID
 rMNM    BYTE "rM "      // Special Register Name
 rMBLKS  BYTE "     "
-rMADR   BYTE "#1234567812345678 : "
+rMADR   BYTE "#________________ : "
 rMDESC  BYTE  "multiplex mask register",#a,0
 //----------------------------------------
 rNData  WYDE 9 // Special Register ID
 rNNM    BYTE "rN "      // Special Register Name
 rNBLKS  BYTE "     "
-rNADR   BYTE "#1234567812345678 : "
+rNADR   BYTE "#________________ : "
 rNDESC  BYTE  "serial number",#a,0
 //----------------------------------------
 rOData  WYDE 10 // Special Register ID
 rONM    BYTE "rO "      // Special Register Name
 rOBLKS  BYTE "     "
-rOADR   BYTE "#1234567812345678 : "
+rOADR   BYTE "#________________ : "
 rODESC  BYTE  "register stack offset",#a,0
 //----------------------------------------
 rPData  WYDE 23 // Special Register ID
 rPNM    BYTE "rP "      // Special Register Name
 rPBLKS  BYTE "     "
-rPADR   BYTE "#1234567812345678 : "
+rPADR   BYTE "#________________ : "
 rPDESC  BYTE  "prediction register",#a,0
 //----------------------------------------
 rQData  WYDE 16 // Special Register ID
 rQNM    BYTE "rQ "      // Special Register Name
 rQBLKS  BYTE "     "
-rQADR   BYTE "#1234567812345678 : "
+rQADR   BYTE "#________________ : "
 rQDESC  BYTE  "interrupt request register",#a,0
 //----------------------------------------
 rRData  WYDE 6 // Special Register ID
 rRNM    BYTE "rR "      // Special Register Name
 rRBLKS  BYTE "     "
-rRADR   BYTE "#1234567812345678 : "
+rRADR   BYTE "#________________ : "
 rRDESC  BYTE  "remainder register",#a,0
 //----------------------------------------
 rSData  WYDE 11 // Special Register ID
 rSNM    BYTE "rS "      // Special Register Name
 rSBLKS  BYTE "     "
-rSADR   BYTE "#1234567812345678 : "
+rSADR   BYTE "#________________ : "
 rSDESC  BYTE  "register stack pointer",#a,0
 //----------------------------------------
 rTData  WYDE 13 // Special Register ID
 rTNM    BYTE "rT "      // Special Register Name
 rTBLKS  BYTE "     "
-rTADR   BYTE "#1234567812345678 : "
+rTADR   BYTE "#________________ : "
 rTDESC  BYTE  "trap address register",#a,0
 //----------------------------------------
 rUData  WYDE 17 // Special Register ID
 rUNM    BYTE "rU "      // Special Register Name
 rUBLKS  BYTE "     "
-rUADR   BYTE "#1234567812345678 : "
+rUADR   BYTE "#________________ : "
 rUDESC  BYTE  "usage counter",#a,0
 //----------------------------------------
 rVData  WYDE 18 // Special Register ID
 rVNM    BYTE "rV "      // Special Register Name
 rVBLKS  BYTE "     "
-rVADR   BYTE "#1234567812345678 : "
+rVADR   BYTE "#________________ : "
 rVDESC  BYTE  "virtual translation register",#a,0
 //----------------------------------------
 rWData  WYDE 24 // Special Register ID
 rWNM    BYTE "rW "      // Special Register Name
 rWBLKS  BYTE "     "
-rWADR   BYTE "#1234567812345678 : "
+rWADR   BYTE "#________________ : "
 rWDESC  BYTE  "where-interrupted register (trip)",#a,0
 //----------------------------------------
 rXData  WYDE 25 // Special Register ID
 rXNM    BYTE "rX "      // Special Register Name
 rXBLKS  BYTE "     "
-rXADR   BYTE "#1234567812345678 : "
+rXADR   BYTE "#________________ : "
 rXDESC  BYTE  "execution register (trip)",#a,0
 //----------------------------------------
 rYData  WYDE 26 // Special Register ID
 rYNM    BYTE "rY "      // Special Register Name
 rYBLKS  BYTE "     "
-rYADR   BYTE "#1234567812345678 : "
+rYADR   BYTE "#________________ : "
 rYDESC  BYTE  "Y operand (trip)",#a,0
 //----------------------------------------
 rZData  WYDE 27 // Special Register ID
 rZNM    BYTE "rZ "      // Special Register Name
 rZBLKS  BYTE "     "
-rZADR   BYTE "#1234567812345678 : "
+rZADR   BYTE "#________________ : "
 rZDESC  BYTE  "Z operand (trip)",#a,0
 //----------------------------------------
 rBBData  WYDE 7 // Special Register ID
 rBBNM    BYTE "rBB"      // Special Register Name
 rBBBLKS  BYTE "     "
-rBBADR   BYTE "#1234567812345678 : "
+rBBADR   BYTE "#________________ : "
 rBBDESC  BYTE  "bootstrap register (trap)",#a,0
 //----------------------------------------
 rTTData  WYDE 14 // Special Register ID
 rTTNM    BYTE "rTT"      // Special Register Name
 rTTBLKS  BYTE "     "
-rTTADR   BYTE "#1234567812345678 : "
+rTTADR   BYTE "#________________ : "
 rTTDESC  BYTE  "dynamic trap address register",#a,0
 //----------------------------------------
 rWWData  WYDE 28 // Special Register ID
 rWWNM    BYTE "rWW"      // Special Register Name
 rWWBLKS  BYTE "     "
-rWWADR   BYTE "#1234567812345678 : "
+rWWADR   BYTE "#________________ : "
 rWWDESC  BYTE  "where-interrupted register (trap)",#a,0
 //----------------------------------------
 rXXData  WYDE 29 // Special Register ID
 rXXNM    BYTE "rXX"      // Special Register Name
 rXXBLKS  BYTE "     "
-rXXADR   BYTE "#1234567812345678 : "
+rXXADR   BYTE "#________________ : "
 rXXDESC  BYTE  "execution register (trap)",#a,0
 //----------------------------------------
 rYYData  WYDE 30 // Special Register ID
 rYYNM    BYTE "rYY"      // Special Register Name
 rYYBLKS  BYTE "     "
-rYYADR   BYTE "#1234567812345678 : "
+rYYADR   BYTE "#________________ : "
 rYYDESC  BYTE  "Y operand (trap)",#a,0
 //----------------------------------------
 rZZData  WYDE 31 // Special Register ID
 rZZNM    BYTE "rZZ"      // Special Register Name
 rZZBLKS  BYTE "     "
-rZZADR   BYTE "#1234567812345678 : "
+rZZADR   BYTE "#________________ : "
 rZZDESC  BYTE  "Z operand (trap)",#a,0
 //
 // DSECT Sorta ....
@@ -239,3 +240,4 @@ SPREGDAT  IS     @
           OCTA rYYData   // rYY register data addr
           OCTA rZZData   // rZZ register data addr
 SPGREGLN  IS (@-SPREGDAT)/8 // Register data count
+9H        IS   @
