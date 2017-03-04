@@ -1,20 +1,18 @@
 // -------------------------------------------------------------------
+// Data
+          LOC    9B
+          GREG   @
+LOWNYBS   OCTA   #0f0f0f0f0f0f0f0f
+HEXTRTABL BYTE   "0123456789abcdef"
+DUMMYDATA OCTA   #1234567890abcdef
+BYTELODMS OCTA   #0000000000000008
+9H        IS     @
+// -------------------------------------------------------------------
 // Code
-         LOC    8B
-Main     IS     @
-osreg    IS     $255
+          LOC    8B
+Main      IS     @
 //****
-         LDA    $15,SPREGDAT        // Adress of register addresses
-         SETL   $14,SPGREGLN        // Count of addresses
-0H       IS     @ 
-         LDOU   $13,$15             // Get Address of Reg Data
-         ADDU   osreg,$13,5         // Point to text area
-         TRAP   0,Fputs,StdOut      // Write it
-// Loop end
-         ADDU   $15,$15,8           // Point to next pointer
-         SUBU   $14,$14,1           // Decrement Reg Data Count
-         PBP    $14,0B              // Loop for all regs
+          PUSHJ  $0,SHSPREGS
 // Return to OS
-         TRAP   0,Halt,0            // Exit
-8H       IS     @
-//
+          TRAP   0,Halt,0            // Exit
+8H        IS     @

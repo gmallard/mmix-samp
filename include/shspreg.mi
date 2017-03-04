@@ -1,0 +1,53 @@
+// Code
+          LOC    8B
+osreg     IS     $255          
+// -------------------------------------------------------------------
+SHSPREGS  IS     @
+          GET    R8,rJ               // Return address
+          LDOU   $12,LOWNYBS         // Load Low Nyble Mask
+          LDA    $11,HEXTRTABL       // Point to XLATE table
+          LDA    $15,SPREGDAT        // Adress of register addresses
+          SETL   $14,SPGREGLN        // Count of addresses
+0H        IS     @ 
+          LDOU   $13,$15             // Get Address of Reg Data
+//
+          PUSHJ  $16,GETREG          // Get special register value
+          LDOU $0,DUMMYDATA // *TEMP*
+          SET    $1,$0               // Copy value
+          SET    $2,$0               // Copy Again
+          SRU    $2,$2,4             // Hi Order Nyb -> Low Order
+// Isolate the nybles
+          AND    $1,$1,$12           // And out Data (get LowNybs)
+          AND    $2,$2,$12           // And out Data (get HiNybs)
+          ADDU   $3,$13,SRVALBEG     // Point to start of area
+          SETL   $6,8                // Loop count
+          LDOU   $10,BYTELODMS       // Byte 0 mask
+1H        IS     @
+          MOR    $4,$2,$10           // Get next input nyble
+          LDBU   $5,$11,$4           // Get next byte
+          STBU   $5,$3               // Put it in output
+          ADDU   $3,$3,1             // Incr output location
+//
+          MOR    $4,$1,$10           // Get next input nyble
+          LDBU   $5,$11,$4           // Get next byte
+          STBU   $5,$3               // Put it in output
+          ADDU   $3,$3,1             // Incr output location
+//
+          SRU    $10,$10,1           // Shift for next byte mask
+          SUBU   $6,$6,1             // Decr loop count
+          PBP    $6,1B               // Loop for all bytes
+          //
+          ADDU   osreg,$13,SRNAME    // Point to text area
+          TRAP   0,Fputs,StdOut      // Write it
+// Loop end
+          ADDU   $15,$15,8           // Point to next pointer
+          SUBU   $14,$14,1           // Decrement Reg Data Count
+          PBP    $14,0B              // Loop for all regs
+// Return to caller
+          PUT   rJ,$8                // Set Ret Addr
+          POP   0,0
+//
+GETREG    GET   $0,rS
+          POP   1,0                 // Return 1 result (will be in $0)
+GETREGSR  IS    GETREG+2            // Special Register Code Number
+8H        IS    @
