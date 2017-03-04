@@ -75,9 +75,6 @@ GETABRTAB IS    @
 osreg     IS     $255          
 // -------------------------------------------------------------------
 SHSPREGS  IS     @
-          SET    $16,#cafe
-          SET    $17,#babe
-          SET    $18,#bad1
           GET    $8,rJ               // Return address
           LDOU   $12,LOWNYBS         // Load Low Nyble Mask
           LDA    $11,HEXTRTABL       // Point to XLATE table
@@ -86,16 +83,9 @@ SHSPREGS  IS     @
           GETA   $9,GETABRTAB        // Point to GET table
 0H        IS     @ 
           LDOU   $13,$15             // Get Address of Reg Data
-
-//
-//          LDWU   $9,$13,0            // Get special register number
-//          GETA   $10,GETREG          // Load address
-//          STWU   $9,$10,2            // Save Reg number
-//GETREG    GET    $0,rS               // Pattern GET
-
           PUSHGO $16,$9,0            // Get the register value
-          SET    $1,$17              // Copy value
-          SET    $2,$17              // Copy Again
+          SET    $1,$16              // Copy value
+          SET    $2,$16              // Copy Again
           SRU    $2,$2,4             // Hi Order Nyb -> Low Order
 // Isolate the nybles
           AND    $1,$1,$12           // And out Data (get LowNybs)
