@@ -20,4 +20,6 @@ temp*
 *.incsave
 # Assemble check directory
 tasm*
+# build artifacts
+*.work
 
