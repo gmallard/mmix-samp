@@ -1,0 +1,118 @@
+          LOC    8B                 // Code start
+//
+SHMEMORY  IS     @
+          GET    $13,rJ             // Return address
+          LDOU   $15,LOWNYBS        // Low Nybbles mask
+          LDA    $14,HEXTRTABL      // Point to XLATE table
+//
+          LDOU   $2,$0,PRIMEPADR    // Get address
+          LDOU   $5,$0,PRIMEPLEN    // Get length (bytes)
+0H        IS     @
+          LDA    $17,PRIMEPARM      // Copy Parms address
+          PUSHJ  $16,MemCpyByt      // Prime Output Buffer
+
+//        Address part of output
+          SET    $3,$2              // Copy it
+          SET    $4,$2              // Copy it again
+          SRU    $4,$4,4            // Isolate HO bytes
+          AND    $3,$3,$15          // Isolate nybbles
+          AND    $4,$4,$15          // Isolate nybbles
+          //
+          LDOU   $6,BYTELODMS       // Get initial byte mask
+          SET    $7,8               // Get byte count
+          LDA    $8,DBDUMPADR       // Point to address area
+//        All bytes in the address
+1H        IS     @
+          MOR    $9,$4,$6           // Copy 1 nybbles
+          LDBU   $10,$14,$9         // Get printable byte
+          STBU   $10,$8             // Put it in output area
+          ADDU   $8,$8,1            // Point to next output
+          MOR    $9,$3,$6           // Copy 1 nybbles
+          LDBU   $10,$14,$9         // Get next printable byte
+          STBU   $10,$8             // Put it in output area
+          ADDU   $8,$8,1            // Point to next output
+//
+          SRU    $6,$6,1            // Get next byte mask
+          SUBU   $7,$7,1            // Decr byte counter
+          PBP    $7,1B              // Loop for all bytes
+
+//        Data (center and right) part of output
+          // $2 points to next input data
+          SET    $17,$2             // Subroutine parm ($0)
+          GETA   $3,SETNXT16        // Subroutine address
+          PUSHGO $16,$3,0           // Call subroutine
+
+//        Print next line
+          LDA    $255,DUMPBUFF      // Get Buffer address
+          TRAP   0,Fputs,StdOut     // Write it
+//
+          ADDU   $2,$2,16           // Next input address
+          SUBU   $5,$5,16           // Decrement byte count
+          PBP    $5,0B              // Loop for all bytes
+//
+          PUT    rJ,$13             // Set Ret Addr          
+          POP    0,0                // Return (no data)
+//
+SETNXT16  IS     @
+          GET    $8,rJ              // Return address
+          LDOU   $15,LOWNYB         // Low Nybble Mask
+          LDA    $14,HEXTRTABL      // Point to XLATE table  
+          SET    $7,$0              // Save next Input byte
+//
+// Build the middle output area (HEX translate of the input
+// data).
+//
+          SET    $13,DBLPCTR        // Count of 4 byte areas
+          LDA    $9,DBLPARMS        // Point to parms data
+          LDOU   $12,$9             // Point to first area
+// Next 4 byte area
+0H        IS     @
+          SET    $11,4              // Byte / area count
+          SET    $10,0              // Running Output offset
+// Next 4 bytes in the area
+1H        IS     @
+          LDBU   $2,$0              // Next Byte 0
+          SET    $3,$2              // Copy it
+          SRU    $2,$2,4            // Low Nybble
+          AND    $3,$3,$15          // High Nybble
+          LDBU   $2,$14,$2          // Printable Low byte
+          LDBU   $3,$14,$3          // Printable High byte
+          STBU   $2,$12,$10         // Stash in output buffer
+          ADDU   $10,$10,1          // Next output offset
+          STBU   $3,$12,$10         // Stash in output buffer
+          ADDU   $10,$10,1          // Next output offset          
+// Loop for all 4 bytes
+          ADDU   $0,$0,1            // Next Input byte
+          SUBU   $11,$11,1          // Decr byte / area count
+          PBP    $11,1B             // Loop for all bytes
+// Loop for all areas
+          ADDU   $9,$9,8            // Point to next 4 byte area
+          LDOU   $12,$9             // Point to parms data
+          SUBU   $13,$13,1          // Decr area count
+          PBP    $13,0B             // Loop for all areas
+//
+// Build the right hand side of the output area:
+// For characters < #20, show a '.'.
+// Otherwise show the character itself
+//
+          SET    $0,$7              // Reget input address start
+          SET    $2,#2e             // Period
+          LDA    $3,DBDATAB16       // Point to 16 byte area
+          SET    $4,0               // Data Offset in output
+          SET    $5,16              // Byte count
+2H        IS     @
+          LDBU   $6,$0              // Get next input byte
+          STBU   $6,$3,$4           // Save it in output
+          CMPU   $1,$6,#20          // Q/Less that Blank
+          PBNN   $1,3F              // A/No, go
+          STBU   $2,$3,$4           // Save period in output
+3H        IS     @
+//
+          ADDU   $0,$0,1            // Incr Input offset
+          ADDU   $4,$4,1            // Incr Output offset
+          SUBU   $5,$5,1            // Decr byte count
+          PBP    $5,2B              // Loop for all bytes
+//          
+          PUT    rJ,$8              // Set Ret Addr          
+          POP    0,0                // Return (no data)          
+8H        IS     @                  // Code end
