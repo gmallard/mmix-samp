@@ -34,7 +34,6 @@ copdata:
 	if [ -e $(TARG).incdata ]; \
 	then \
 	for f in $$(cat $(TARG).incdata); do \
-	echo $(MMIX_INCDATA)/$$f; \
 	cat $(MMIX_INCDATA)/$$f >> $(TARG).work; \
 	done; \
 	fi
@@ -43,7 +42,6 @@ copcode:
 	if [ -e $(TARG).includes ]; \
 	then \
 	for f in $$(cat $(TARG).includes); do \
-	echo $(MMIX_INC)/$$f; \
 	cat $(MMIX_INC)/$$f >> $(TARG).work; \
 	done; \
 	fi
