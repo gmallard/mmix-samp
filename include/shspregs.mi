@@ -1,0 +1,99 @@
+//
+// GETA Branch table
+          LOC   8B
+          LOC   @+(4-@)&3 // TETRA Align
+GETABRTAB IS    @
+          GET   $0,rA        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rB        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rC        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rD        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rE        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rF        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rG        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rH        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rI        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rJ        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rK        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rL        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rM        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rN        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rO        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rP        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rQ        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rR        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rS        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rT        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rU        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rV        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rW        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rX        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rY        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rZ        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rBB        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rTT        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rWW        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rXX        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rYY        // Get special register value
+          POP   1,0          // Return 1 register
+          GET   $0,rZZ        // Get special register value
+          POP   1,0          // Return 1 register
+8H        IS    @
+          LOC    8B
+// -------------------------------------------------------------------
+osreg     IS     $255          
+// -------------------------------------------------------------------
+SHSPREGS  IS     @
+          GET    $8,rJ               // Return address
+          LDA    $15,SPREGDAT        // Adress of register addresses
+          SETL   $14,SPGREGLN        // Count of addresses
+          GETA   $9,GETABRTAB        // Point to GET table
+0H        IS     @ 
+          LDOU   $13,$15             // Get Address of Reg Data
+          PUSHGO $16,$9,0            // Get the register value
+//
+          SET    $17,$16             // Set value
+          ADDU   $18,$13,SRADDRO     // Point to start of area
+          GETA   $4,PUTMEMRD         // Sub Addr
+          PUSHGO $16,$4,0            // Call sub
+          //
+          ADDU   osreg,$13,SRVNAME   // Point to text area
+          TRAP   0,Fputs,StdOut      // Write it
+// Loop end
+          ADDU   $15,$15,8           // Point to next pointer
+          ADDU   $9,$9,8             // Next branch table entry
+          SUBU   $14,$14,1           // Decrement Reg Data Count
+          PBP    $14,0B              // Loop for all regs
+// Return to caller
+          PUT   rJ,$8                // Set Ret Addr
+          POP   0,0
+8H        IS    @

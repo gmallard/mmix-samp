@@ -28,20 +28,27 @@ Main      IS    @
 
 // Code
           LOC   8B
+// The immediate form MOR $X,$Y,Z always sets the leading seven
+// bytes of register X to zero; the other byte is set to the
+// bitwise or of whatever bytes of register Y are specified by
+// the immediate operand Z.)
 NZZDISP   IS    @
           LDOU  $2,SEQBYTEM
-          MOR   $3,$2,#01
-          MOR   $4,$2,#03
-          MOR   $5,$2,#ff
-          MOR   $6,$2,#fe
+          MOR   $3,$2,#01          // -> #08
+          MOR   $4,$2,#03          // -> #0f (#07 | #08)
+          MOR   $5,$2,#ff          // -> #0f (#01 | ... | #08)
+          MOR   $6,$2,#fe          // -> #07 (#01 | ... | #07) 
           POP   0,0
 8H        IS    @
 
 // -------------------------------------------------------------------
 // Data
           LOC   9B
-BYTECOPYM OCTA  #8040201008040201  // Straight extract
-BYTEMTEST OCTA  #01020304050607f8  // Data
+// The bits in the mask bytes ($Z) specify which bytes to use from
+// the $Y field.  This example is just a 'copy' of all the bytes
+// from $Y (#01020304050607f8)
+BYTECOPYM OCTA  #8040201008040201  // Straight extract ($Z)
+BYTEMTEST OCTA  #01020304050607f8  // Data ($Y)
 9H        IS    @
 
 // Code
@@ -50,8 +57,8 @@ BCOPYDISP IS    @
 # -----------------------------------
           LDOU   $1,BYTECOPYM   // Byte copy mask
           LDOU   $2,BYTEMTEST   // Test Pattern
-          MOR    $3,$2,$1       // MOR
-          MXOR   $4,$2,$1       // MXOR (S/B Same)
+          MOR    $3,$2,$1       // MOR: -> #01020304050607f8
+          MXOR   $4,$2,$1       // MXOR (Also) -> #01020304050607f8
           POP   0,0
 8H        IS    @
 
@@ -64,36 +71,95 @@ BYTE2LOWM OCTA  #8040201008040202  // Two low bytes
 // Code
           LOC   8B
 LOW2BDISP IS    @
-          LDOU  $1,BYTE2LOWM   // Byte copy mask
-          LDOU  $2,BYTECOPYM   // Test Pattern from old mask
-          MOR   $3,$2,$1       // MOR
-          MXOR  $4,$2,$1       // MXOR (S/B Same)
+          LDOU  $1,BYTE2LOWM   // Byte copy mask ($Z)
+          LDOU  $2,BYTECOPYM   // Test Pattern from old mask ($Y)
+          MOR   $3,$2,$1       // MOR -> #8040201008040202
+          MXOR  $4,$2,$1       // MXOR (Also) -> #8040201008040202
           POP   0,0
 8H        IS    @
 
 // -------------------------------------------------------------------
 // Data
           LOC   9B
-SEQNDATA  OCTA  #0102030405060708  # Data
+SEQNDATA  OCTA  #0102030405060708  # Data ($Y)
+
+// These will be various $Z (mask) values
 FIDDLEDAT OCTA  #80402010080402ff  # Not so straight extract
+// Above: Straight 'extract byte' for bytes 0 .. 7
+// Or all bytes for byte 7
+// -> #010203040506070f
+
  OCTA  #ffffffffffffffff  // Not so straight extract
- OCTA  #0000000000000000  // Not so straight extract => 0, 0
- OCTA  #0000000000000001  // Not so straight extract => 8, 8
- OCTA  #0000000000000002  // Not so straight extract => 7, 7
- OCTA  #0000000000000003  // Not so straight extract => f, f
- OCTA  #0000000000000004  // Not so straight extract => 6, 6
- OCTA  #0000000000000005  // Not so straight extract => e, e
- OCTA  #0000000000000006  // Not so straight extract => 7, 1
- OCTA  #0000000000000007  // Not so straight extract => f, 9
- OCTA  #0000000000000008  // Not so straight extract => 5, 5
- OCTA  #0000000000000009  // Not so straight extract => d, d
- OCTA  #000000000000000a  // Not so straight extract => 7, 2
- OCTA  #000000000000000b  // Not so straight extract => f, a
- OCTA  #000000000000000c  // Not so straight extract => 7, 3
- OCTA  #000000000000000d  // Not so straight extract => f, b
- OCTA  #000000000000000e  // Not so straight extract => 7, 4
- OCTA  #000000000000000f  // Not so straight extract => f, c
-FDATTNENT IS    (@-FIDDLEDAT)/8
+// Above: OR all bytes for all bytes.
+// -> #0f0f0f0f0f0f0f0f
+
+ OCTA  #0000000000000000  // Not so straight extract
+// Above: Do not OR any bytes
+// -> #0000000000000000
+
+ OCTA  #0000000000000001  // Not so straight extract
+// Above: Only OR byte 7 (#08) into byte 7
+// -> #0000000000000008
+
+ OCTA  #0000000000000002  // Not so straight extract
+// Above: Only OR byte 6 (#07) into byte 7
+// -> #0000000000000007
+
+ OCTA  #0000000000000003  // Not so straight extract
+// Above: Or bytes 6..7 (#07..#08) into byte 7
+// -> #000000000000000f
+
+ OCTA  #0000000000000004  // Not so straight extract
+// Above: Only OR byte 5 (#06) into byte 7
+// -> #0000000000000006
+
+ OCTA  #0000000000000005  // Not so straight extract
+// Above: Or bytes 5 (#06) and 7 (#08) into byte 7
+// -> #000000000000000e
+
+ OCTA  #0000000000000006  // Not so straight extract
+// Above: Or bytes 5 and 6 into byte 7
+// -> #0000000000000007
+
+ OCTA  #0000000000000007  // Not so straight extract
+// Above: Or bytes 5..7 (#06,#07,#08) into byte 7
+// -> #000000000000000f
+
+ OCTA  #0000000000000008  // Not so straight extract
+// Above: Or byte 4 (#05) into byte 7
+// -> #0000000000000005
+
+ OCTA  #0000000000000009  // Not so straight extract
+// Above: Or bytes 4 (#05) and 7 (#08) into byte 7
+// -> #000000000000000d
+
+ OCTA  #000000000000000a  // Not so straight extract
+// Above: Or bytes 4 (#05) and 6 (#07) into byte 7
+// -> #0000000000000007
+
+ OCTA  #000000000000000b  // Not so straight extract
+// Above: Or bytes 4 (#05) and 6 (#07) and 7 (#08)
+// into byte 7
+// -> #000000000000000f
+
+ OCTA  #000000000000000c  // Not so straight extract
+// Above: Or bytes 4 (#05) and 6 (#07) into byte 7
+// -> #0000000000000007
+
+ OCTA  #000000000000000d  // Not so straight extract
+// Above: Or bytes 4 (#05) and 5 (#06) and 7 (#08)
+// into byte 7
+// -> #000000000000000f 
+
+ OCTA  #000000000000000e  // Not so straight extract
+// Above: Or bytes 4..6 (#05, #06, #07) into byte 7
+// -> #0000000000000007
+
+ OCTA  #000000000000000f  // Not so straight extract
+// Above: Or bytes 4..7 (#05, #06, #07, #08 )
+// into byte 7
+// -> 000000000000000f
+FDATTNENT IS    (@-FIDDLEDAT)/8 // Octa count
 9H        IS    @
 
 // Code
@@ -101,13 +167,13 @@ FDATTNENT IS    (@-FIDDLEDAT)/8
 MRGBBDISP IS    @
           SETL  $0,FDATTNENT    // Counter
           LDA   $1,FIDDLEDAT    // Table address
-0H        LDOU  $2,$1,0         // Next Mask
-          LDOU  $3,SEQNDATA     // Test data
+          LDOU  $3,SEQNDATA     // Test data ($Y) (Constant this test)
+0H        LDOU  $2,$1,0         // Next Mask ($Z)
           MOR   $4,$3,$2        // MOR
           MXOR  $5,$3,$2        // MXOR (S/B Same)
 //
           ADDU  $1,$1,8         // Incr mask address
-          SUBU  $0,$0,1         // Decrement count
+          SUBU  $0,$0,1         // Decrement octa count
           PBP   $0,0B           // Loop for all entries
           POP   0,0
 8H        IS    @
@@ -122,10 +188,10 @@ CMPLDMSK  OCTA  #0000000000000003  # Not so straight extract
 // Code
           LOC   8B
 MCMPBDISP IS    @
-          LDOU  $3,CLMPDATA0    // Data
-          LDOU  $2,CMPLDMSK     // Mask
-          MOR   $4,$3,$2        // MOR
-          MXOR  $5,$3,$2        // MXOR
+          LDOU  $3,CLMPDATA0    // Data ($Y)
+          LDOU  $2,CMPLDMSK     // Mask ($Z)
+          MOR   $4,$3,$2        // MOR (-> #ff)
+          MXOR  $5,$3,$2        // MXOR (-> #00)
           POP   0,0
 8H        IS    @
 

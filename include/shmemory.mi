@@ -1,0 +1,126 @@
+          LOC    8B                 // Code start
+//
+SHMEMORY  IS     @
+          GET    $13,rJ             // Return address
+//
+          SET    $2,$0              // Get address
+          SET    $5,$1              // Get length (bytes)
+          SET    $17,$5             // Copy Length
+          LDA    $18,MEMDMPLND      // Addr Output Area
+          GETA   $4,PUTMEMLN        // Sub Addr
+          PUSHGO $16,$4,0           // Call length sub
+0H        IS     @
+          LDA    $17,PRIMEPARM      // Copy Parms address
+          GETA   $4,MemCpyByt       // Sub Addr
+          PUSHGO $16,$4,0           // Prime buffer
+
+//        Address part of output
+          SET    $17,$2             // Set address to output
+          LDA    $18,DBDUMPADR      // Point to output area
+          GETA   $4,PUTMEMRD        // Sub Address
+          PUSHGO $16,$4,0           // Call Reg Data Put
+
+//        Data (center and right) part of output
+          // $2 points to next input data
+          SET    $17,$2             // Subroutine parm ($0)
+          SET    $18,$5             // Subroutine parm ($1)
+          GETA   $3,SETNXT16        // Subroutine address
+          PUSHGO $16,$3,0           // Call subroutine
+
+//        Print next line
+          LDA    $255,DUMPBUFF      // Get Buffer address
+          TRAP   0,Fputs,StdOut     // Write it
+//
+          ADDU   $2,$2,16           // Next input address
+          SUBU   $5,$5,16           // Decrement byte count
+          PBP    $5,0B              // Loop for all bytes
+//
+          PUT    rJ,$13             // Set Ret Addr          
+          POP    0,0                // Return (no data)
+//
+SETNXT16  IS     @
+          GET    $8,rJ              // Return address
+          LDOU   $15,LOWNYB         // Low Nybble Mask
+          LDA    $14,HEXTRTABL      // Point to XLATE table  
+          SET    $7,$0              // Save next Input byte
+          SET    $6,$1              // Save Length
+//
+// Build the middle output area (HEX translate of the input
+// data).
+//
+          SET    $13,DBLPCTR        // Count of 4 byte areas
+          LDA    $9,DBLPARMS        // Point to parms data
+          LDOU   $12,$9             // Point to first area
+// Next 4 byte area
+0H        IS     @
+          SET    $11,4              // Byte / area count
+          SET    $10,0              // Running Output offset
+// Next 4 bytes in the area
+1H        IS     @
+          LDBU   $2,$0              // Next Byte 0
+          SET    $3,$2              // Copy it
+          SRU    $2,$2,4            // Low Nybble
+          AND    $3,$3,$15          // High Nybble
+          LDBU   $2,$14,$2          // Printable Low byte
+          LDBU   $3,$14,$3          // Printable High byte
+          STBU   $2,$12,$10         // Stash in output buffer
+          ADDU   $10,$10,1          // Next output offset
+          STBU   $3,$12,$10         // Stash in output buffer
+          ADDU   $10,$10,1          // Next output offset
+// Check for end of data
+          SUBU   $1,$1,1            // Decr Length
+          BNP    $1,3F              // Fast loop exit id done       
+// Loop for all 4 bytes
+          ADDU   $0,$0,1            // Next Input byte
+          SUBU   $11,$11,1          // Decr byte / area count
+          PBP    $11,1B             // Loop for all bytes
+// Loop for all areas
+          ADDU   $9,$9,8            // Point to next 4 byte area
+          LDOU   $12,$9             // Point to parms data
+          SUBU   $13,$13,1          // Decr area count
+          PBP    $13,0B             // Loop for all areas
+3H        IS     @
+//
+// Build the right hand side of the output area:
+// For characters < #20, show a '.'.
+// Otherwise show the character itself
+//
+          SET    $0,$7              // Reget input address start
+          SET    $14,$6             // And reget length
+          SET    $2,#2e             // Period
+          LDA    $3,DBDATAB16       // Point to 16 byte area
+          SET    $4,0               // Data Offset in output
+          SET    $5,16              // Byte count
+2H        IS     @
+          LDBU   $6,$0              // Get next input byte
+          STBU   $6,$3,$4           // Save it in output
+          CMPU   $1,$6,#20          // Q/Less that Blank
+          PBNN   $1,3F              // A/No, go
+          STBU   $2,$3,$4           // Save period in output
+3H        IS     @
+//
+          SUBU   $14,$14,1          // Decr Length
+          BNP    $14,4F             // Loop exit if done
+          ADDU   $0,$0,1            // Incr Input offset
+          ADDU   $4,$4,1            // Incr Output offset
+          SUBU   $5,$5,1            // Decr byte count
+          PBP    $5,2B              // Loop for all bytes
+4H        IS     @
+//          
+          PUT    rJ,$8              // Set Ret Addr          
+          POP    0,0                // Return (no data)          
+//
+PUTMEMLN  IS     @
+          GET    $13,rJ             // Return address
+          // $0 == Data
+          // $1 == Output
+          SET    $17,$0             // Copy Data
+          SET    $18,$1             // Sete Output address
+          GETA   $2,PUTMEMRD        // Sub Address
+          PUSHGO $16,$2,0           // Call Reg Data Put
+//        Print  line
+          LDA    $255,MEMDMPINF     // Get Buffer address
+          TRAP   0,Fputs,StdOut     // Write it
+          PUT    rJ,$13             // Set Ret Addr          
+          POP    0,0                // Return (no data)          
+8H        IS     @                  // Code end

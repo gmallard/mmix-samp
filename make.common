@@ -7,14 +7,50 @@ endif
 MMIXAL = mmixal
 SRC_SUFF = mms
 OBJ_SUFF = mmo
-## LST_SUFF = map
 LST_SUFF = lst
+INC_SUFF = incsave
+INC_FILE = $(TARG).includes
 
 all: $(TARG).$(OBJ_SUFF)
 
 $(TARG).$(OBJ_SUFF):$(TARG).$(SRC_SUFF)
 	$(MMIXAL) -l $(TARG).$(LST_SUFF) -o $(TARG).$(OBJ_SUFF) $(TARG).$(SRC_SUFF)
 
-clean:
-	rm -f *.$(LST_SUFF) *.$(OBJ_SUFF)
+allinc: cops $(TARG).$(OBJ_SUFF) cback
 
+cops: copbeg copdata catsrc copcode mvcode
+
+copbeg:
+	cp $(TARG).$(SRC_SUFF) $(TARG).$(INC_SUFF)
+	cp $(MMIX_INC)/prefix.mms $(TARG).work
+
+catsrc:
+	cat $(TARG).$(SRC_SUFF) >> $(TARG).work
+
+mvcode:
+	mv $(TARG).work $(TARG).$(SRC_SUFF)
+
+copdata:
+	if [ -e $(TARG).incdata ]; \
+	then \
+	for f in $$(cat $(TARG).incdata); do \
+	echo $(MMIX_INCDATA)/$$f; \
+	cat $(MMIX_INCDATA)/$$f >> $(TARG).work; \
+	done; \
+	fi
+
+copcode:
+	if [ -e $(TARG).includes ]; \
+	then \
+	for f in $$(cat $(TARG).includes); do \
+	echo $(MMIX_INC)/$$f; \
+	cat $(MMIX_INC)/$$f >> $(TARG).work; \
+	done; \
+	fi
+
+cback:
+	cp $(TARG).$(INC_SUFF) $(TARG).$(SRC_SUFF)
+	rm $(TARG).$(INC_SUFF)
+
+clean:
+	rm -f *.$(LST_SUFF) *.$(OBJ_SUFF) *.$(INC_SUFF)

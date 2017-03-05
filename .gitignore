@@ -14,3 +14,12 @@ temp*
 #
 .vscode
 .kate*
+#
+# include system temporaries
+#
+*.incsave
+# Assemble check directory
+tasm*
+# Build artifacts
+*.work
+
