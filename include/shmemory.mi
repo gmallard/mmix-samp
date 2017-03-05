@@ -3,8 +3,8 @@
 SHMEMORY  IS     @
           GET    $13,rJ             // Return address
 //
-          LDOU   $2,$0,PRIMEPADR    // Get address
-          LDOU   $5,$0,PRIMEPLEN    // Get length (bytes)
+          SET    $2,$0              // Get address
+          SET    $5,$1              // Get length (bytes)
           SET    $17,$5             // Copy Length
           LDA    $18,MEMDMPLND      // Addr Output Area
           GETA   $4,PUTMEMLN        // Sub Addr

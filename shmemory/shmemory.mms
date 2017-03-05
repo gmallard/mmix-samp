@@ -9,7 +9,8 @@ SHMEMPARM OCTA   LOWNYBS            // Start address to dump
           LOC    8B                 // Code start
 Main      IS     @
 //        Call Memory show (print) routine
-          LDA    $1,SHMEMPARM       // Parms address (subr $0)
+          LDOU   $1,SHMEMPARM       // Parms address (subr $0)
+          LDOU   $2,SHMEMPARM+8     // Length (subr $1)
           PUSHJ  $0,SHMEMORY        // Call subroutine
 //        Return to OS
           TRAP   0,Halt,0           // Exit
