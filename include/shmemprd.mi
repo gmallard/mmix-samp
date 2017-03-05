@@ -1,0 +1,37 @@
+// -------------------------------------------------------------------
+          LOC    8B                 // Code start
+          LOC   @+(4-@)&3           // TETRA Align
+//
+PUTMEMRD  IS     @
+          GET    $13,rJ             // Return address
+          // $0 == Data to put
+          // $1 == Output Area
+          LDOU   $15,LOWNYBS        // Low Nybbles mask
+          LDA    $14,HEXTRTABL      // Point to XLATE table
+          SET    $3,$0              // Copy put data
+          SET    $4,$0              // Copy it again
+          SRU    $4,$4,4            // Isolate HO bytes
+          AND    $3,$3,$15          // Isolate nybbles
+          AND    $4,$4,$15          // Isolate nybbles
+          //
+          LDOU   $6,BYTELODMS       // Get initial byte mask
+          SET    $7,8               // Get byte count
+          SET    $8,$1              // Point to output area
+//        All bytes in the address
+1H        IS     @
+          MOR    $9,$4,$6           // Copy 1 nybbles
+          LDBU   $10,$14,$9         // Get printable byte
+          STBU   $10,$8             // Put it in output area
+          ADDU   $8,$8,1            // Point to next output
+          MOR    $9,$3,$6           // Copy 1 nybbles
+          LDBU   $10,$14,$9         // Get next printable byte
+          STBU   $10,$8             // Put it in output area
+          ADDU   $8,$8,1            // Point to next output
+//
+          SRU    $6,$6,1            // Get next byte mask
+          SUBU   $7,$7,1            // Decr byte counter
+          PBP    $7,1B              // Loop for all bytes
+//
+          PUT    rJ,$13             // Set Ret Addr          
+          POP    0,0                // Return (no data)          
+8H        IS     @                  // Code end

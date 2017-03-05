@@ -2,42 +2,23 @@
 //
 SHMEMORY  IS     @
           GET    $13,rJ             // Return address
-          LDOU   $15,LOWNYBS        // Low Nybbles mask
-          LDA    $14,HEXTRTABL      // Point to XLATE table
 //
           LDOU   $2,$0,PRIMEPADR    // Get address
           LDOU   $5,$0,PRIMEPLEN    // Get length (bytes)
           SET    $17,$5             // Copy Length
+          LDA    $18,MEMDMPLND      // Addr Output Area
           GETA   $4,PUTMEMLN        // Sub Addr
           PUSHGO $16,$4,0           // Call length sub
 0H        IS     @
           LDA    $17,PRIMEPARM      // Copy Parms address
-          PUSHJ  $16,MemCpyByt      // Prime Output Buffer
+          GETA   $4,MemCpyByt       // Sub Addr
+          PUSHGO $16,$4,0           // Prime buffer
 
 //        Address part of output
-          SET    $3,$2              // Copy it
-          SET    $4,$2              // Copy it again
-          SRU    $4,$4,4            // Isolate HO bytes
-          AND    $3,$3,$15          // Isolate nybbles
-          AND    $4,$4,$15          // Isolate nybbles
-          //
-          LDOU   $6,BYTELODMS       // Get initial byte mask
-          SET    $7,8               // Get byte count
-          LDA    $8,DBDUMPADR       // Point to address area
-//        All bytes in the address
-1H        IS     @
-          MOR    $9,$4,$6           // Copy 1 nybbles
-          LDBU   $10,$14,$9         // Get printable byte
-          STBU   $10,$8             // Put it in output area
-          ADDU   $8,$8,1            // Point to next output
-          MOR    $9,$3,$6           // Copy 1 nybbles
-          LDBU   $10,$14,$9         // Get next printable byte
-          STBU   $10,$8             // Put it in output area
-          ADDU   $8,$8,1            // Point to next output
-//
-          SRU    $6,$6,1            // Get next byte mask
-          SUBU   $7,$7,1            // Decr byte counter
-          PBP    $7,1B              // Loop for all bytes
+          SET    $17,$2             // Set address to output
+          LDA    $18,DBDUMPADR      // Point to output area
+          GETA   $4,PUTMEMRD        // Sub Address
+          PUSHGO $16,$4,0           // Call Reg Data Put
 
 //        Data (center and right) part of output
           // $2 points to next input data
@@ -131,33 +112,12 @@ SETNXT16  IS     @
 //
 PUTMEMLN  IS     @
           GET    $13,rJ             // Return address
-          // $0 == length
-          LDOU   $15,LOWNYBS        // Low Nybbles mask
-          LDA    $14,HEXTRTABL      // Point to XLATE table
-          SET    $3,$0              // Copy it
-          SET    $4,$0              // Copy it again
-          SRU    $4,$4,4            // Isolate HO bytes
-          AND    $3,$3,$15          // Isolate nybbles
-          AND    $4,$4,$15          // Isolate nybbles
-          //
-          LDOU   $6,BYTELODMS       // Get initial byte mask
-          SET    $7,8               // Get byte count
-          LDA    $8,MEMDMPLND       // Point to length area
-//        All bytes in the address
-1H        IS     @
-          MOR    $9,$4,$6           // Copy 1 nybbles
-          LDBU   $10,$14,$9         // Get printable byte
-          STBU   $10,$8             // Put it in output area
-          ADDU   $8,$8,1            // Point to next output
-          MOR    $9,$3,$6           // Copy 1 nybbles
-          LDBU   $10,$14,$9         // Get next printable byte
-          STBU   $10,$8             // Put it in output area
-          ADDU   $8,$8,1            // Point to next output
-//
-          SRU    $6,$6,1            // Get next byte mask
-          SUBU   $7,$7,1            // Decr byte counter
-          PBP    $7,1B              // Loop for all bytes
-
+          // $0 == Data
+          // $1 == Output
+          SET    $17,$0             // Copy Data
+          SET    $18,$1             // Sete Output address
+          GETA   $2,PUTMEMRD        // Sub Address
+          PUSHGO $16,$2,0           // Call Reg Data Put
 //        Print  line
           LDA    $255,MEMDMPINF     // Get Buffer address
           TRAP   0,Fputs,StdOut     // Write it
