@@ -3,6 +3,7 @@
 SHMEMORY  IS     @
           GET    $13,rJ             // Return address
 //
+          BNP    $1,5F              // Exit if 0 or - len
           SET    $2,$0              // Get address
           SET    $5,$1              // Get length (bytes)
           SET    $17,$5             // Copy Length
@@ -35,6 +36,7 @@ SHMEMORY  IS     @
           SUBU   $5,$5,16           // Decrement byte count
           PBP    $5,0B              // Loop for all bytes
 //
+5H        IS     @
           PUT    rJ,$13             // Set Ret Addr          
           POP    0,0                // Return (no data)
 //
