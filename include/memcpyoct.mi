@@ -1,0 +1,22 @@
+// -------------------------------------------------------------------
+          LOC   8B
+          LOC   @+(4-@)&3           // TETRA Align
+MemCpyOct IS    @
+// Copy memory, octa-by-octa.
+//
+// $0 => Parms Address
+// +0 - From Address
+// +8 - To Address
+// +16 - Octa Count (an OCTA)
+          LDOU  $1,$0              // From Address
+          LDOU  $2,$0,8            // To Address
+          LDOU  $3,$0,16           // Length (in tetras)
+0H        LDOU  $4,$1,0            // Get From tetra
+          STOU  $4,$2,0            // Store it
+          ADDU  $1,$1,8            // Increment From Addr
+          ADDU  $2,$2,8            // Increment To Addr
+          SUBU  $3,$3,1            // Decrement tetra count
+          PBP   $3,0B              // Loop for all
+          POP   0,0                // Return
+8H        IS    @
+

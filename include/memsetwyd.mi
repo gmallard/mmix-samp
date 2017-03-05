@@ -1,0 +1,20 @@
+// -------------------------------------------------------------------
+          LOC   8B
+          LOC   @+(4-@)&3           // TETRA Align
+MemSetWyd IS    @
+// Set memory to a given value.  A wyde-by-wyde implementation.
+//
+// $0 => Address of Parms
+// Parms+0 - Address to set
+// Parms+8 - Length to set (wyde count)
+// Parms+16 - Value (low wyde)
+          LDOU  $1,$0             // To Address
+          LDOU  $2,$0,8           // Length
+          LDOU  $3,$0,16          // Value
+//
+0H        STWU  $3,$1,0           // Set wyde to value
+          ADDU  $1,$1,2           // Incr To Address
+          SUBU  $2,$2,1           // Decrement Count
+          PBP   $2,0B             // Loop for all
+          POP   0,0               // Return
+8H        IS    @
