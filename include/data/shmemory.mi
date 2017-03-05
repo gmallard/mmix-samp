@@ -32,17 +32,17 @@ PATBUFF   IS     @
           BYTE   "#"                // DBADHASH
           BYTE   "                " // DBDUMPADR
           BYTE   "   "              // DBBLANKS3
-          BYTE   "        "         // DB4BDATA1
+          BYTE   "________"         // DB4BDATA1
           BYTE   " "                // DBBLANK1B
-          BYTE   "        "         // DB4BDATA2
+          BYTE   "________"         // DB4BDATA2
           BYTE   " "                // DBBLANK1M
-          BYTE   "        "         // DB4BDATA3
+          BYTE   "________"         // DB4BDATA3
           BYTE   " "                // DBBLANK1C
-          BYTE   "        "         // DB4BDATA4
+          BYTE   "________"         // DB4BDATA4
           BYTE   " "                // DBBLANK1D
           BYTE   "*"                // DBSPLAT1
           BYTE   " "                // DBBLANK1E
-          BYTE   "                " // DBDATAB16
+          BYTE   "________________" // DBDATAB16
           BYTE   " "                // DBBLANK1F
           BYTE   "*"                // DBSPLAT2
 PATBLN    IS     @-PATBUFF
@@ -55,4 +55,10 @@ PRIMEPLEN IS     8                  // Length Offset
 //
 DBLPARMS  OCTA   DB4BDATA1,DB4BDATA2,DB4BDATA3,DB4BDATA4
 DBLPCTR   IS     (@-DBLPARMS)/8     // Loop Counter
+//
+          GREG   @                  // Next data base
+MEMDMPINF IS     @
+          BYTE   " Memory Dump, Length Requested: #"
+MEMDMPLND BYTE   "________________"
+          BYTE   #a,0          
 9H        IS     @                  // Data end

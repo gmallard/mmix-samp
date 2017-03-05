@@ -3,7 +3,7 @@
           GREG   @
 SHMEMPARM OCTA   LOWNYBS            // Start address to dump
 //SHMEMPARM OCTA   Stack_Segment            // Start address to dump
-          OCTA   256                // Length to dump
+          OCTA   2                 // Length to dump
 9H        IS     @                  // Data End
 // -------------------------------------------------------------------
           LOC    8B                 // Code start
