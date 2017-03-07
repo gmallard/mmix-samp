@@ -25,8 +25,8 @@ SHMEMORY  IS     @
           // $2 points to next input data
           SET    $17,$2             // Subroutine parm ($0)
           SET    $18,$5             // Subroutine parm ($1)
-          GETA   $3,SETNXT16        // Subroutine address
-          PUSHGO $16,$3,0           // Call subroutine
+          GETA   $4,SETNXT16        // Subroutine address
+          PUSHGO $16,$4,0           // Call subroutine
 
 //        Print next line
           LDA    $255,DUMPBUFF      // Get Buffer address
@@ -42,6 +42,13 @@ SHMEMORY  IS     @
 //
 SETNXT16  IS     @
           GET    $8,rJ              // Return address
+// RHS of the output area first
+          SET    $17,$0             // Input area
+          LDA    $18,DBDATAB16      // Output area
+          SET    $19,$1             // Length
+          GETA   $4,PUTRHSNX        // Sub Address
+          PUSHGO $16,$4,0           // Call Subroutine
+// Now the LHS (middle) of the output area
           LDOU   $15,LOWNYB         // Low Nybble Mask
           LDA    $14,HEXTRTABL      // Point to XLATE table  
           SET    $7,$0              // Save next Input byte
@@ -82,21 +89,31 @@ SETNXT16  IS     @
           SUBU   $13,$13,1          // Decr area count
           PBP    $13,0B             // Loop for all areas
 3H        IS     @
+//          
+          PUT    rJ,$8              // Set Ret Addr          
+          POP    0,0                // Return (no data)          
 //
 // Build the right hand side of the output area:
 // For characters < #20, show a '.'.
 // Otherwise show the character itself
 //
-          SET    $0,$7              // Reget input address start
-          SET    $14,$6             // And reget length
+PUTRHSNX  IS     @
+          GET    $8,rJ              // Return address
+          // $0 == Start of input area
+          // $1 == Start of output area
+          // $2 == length
+//
+          SET    $14,$2             // And reget length
+          // $0 - input addr OK
+          SET    $3,$1              // Output area
           SET    $2,#2e             // Period
-          LDA    $3,DBDATAB16       // Point to 16 byte area
+//
           SET    $4,0               // Data Offset in output
           SET    $5,16              // Byte count
 2H        IS     @
           LDBU   $6,$0              // Get next input byte
           STBU   $6,$3,$4           // Save it in output
-          CMPU   $1,$6,#20          // Q/Less that Blank
+          CMPU   $1,$6,#20          // Q/Less than Blank
           PBNN   $1,3F              // A/No, go
           STBU   $2,$3,$4           // Save period in output
 3H        IS     @
@@ -118,8 +135,8 @@ PUTMEMLN  IS     @
           // $1 == Output
           SET    $17,$0             // Copy Data
           SET    $18,$1             // Sete Output address
-          GETA   $2,PUTMEMRD        // Sub Address
-          PUSHGO $16,$2,0           // Call Reg Data Put
+          GETA   $4,PUTMEMRD        // Sub Address
+          PUSHGO $16,$4,0           // Call Reg Data Put
 //        Print  line
           LDA    $255,MEMDMPINF     // Get Buffer address
           TRAP   0,Fputs,StdOut     // Write it
