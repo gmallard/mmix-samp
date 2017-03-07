@@ -1,15 +1,14 @@
 //*BEGIN prtblankln.mi
 //
 // Calling sequence:
-//        GETA   $0,BlankLine
-//        GO     $0,$0,0
+//        PUSHJ  $0,BlankLine
 //
           LOC    8B                 // Begin code
           LOC    @+(4-@)&3           // TETRA Align
 BlankLine IS     @
           GETA   $255,BlankData     // Empty Line
           TRAP   0,Fputs,StdOut     // Write it
-          GO     $0,$0,0            // Return (no data)
+          POP    0,0                // Return (no data)
 BlankData BYTE  " ",#a,0
 8H        IS     @                  // End code
 //*END prtblankln.mi

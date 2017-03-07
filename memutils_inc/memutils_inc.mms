@@ -190,25 +190,13 @@ Main     IS     @
 
 //--------------------------------------------------------------------
 GETFROMD  IS     @
-          GET    $8,rJ              // Return address
           LDOU   $1,$0,0            // From Address
           LDOU   $0,$0,16           // Length
-          PUT    rJ,$8              // Set Ret Addr
           POP    2,0                // Return (two regs)
 //--------------------------------------------------------------------
 GETTOD    IS     @
-          GET    $8,rJ              // Return address
           LDOU   $1,$0,8            // Get the to address
           LDOU   $0,$0,16           // Get the length
-          PUT    rJ,$8              // Set Ret Addr
           POP    2,0                // Return (two regs)
-//--------------------------------------------------------------------
-BlankLine IS     @
-          GET    $8,rJ              // Return address
-          GETA   $255,BlankData     // Empty Line
-          TRAP   0,Fputs,StdOut     // Write it
-          PUT    rJ,$8              // Set Ret Addr
-          POP    0,0                // Return (no data)
-BlankData BYTE  " ",#a,0
 8H        IS     @
 //
