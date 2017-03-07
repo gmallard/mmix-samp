@@ -1,3 +1,4 @@
+//*BEGIN pattern.mi
           LOC    8B                 // Code start
 //
 PATTERNC  IS     @
@@ -6,3 +7,4 @@ PATTERNC  IS     @
           POP    0,0                // Return to caller
 String    BYTE   "Hello World",#a,0 // String
 8H        IS     @                  // Code end
+//*END pattern.mi

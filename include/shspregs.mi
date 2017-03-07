@@ -1,3 +1,4 @@
+//*BEGIN shspregs.mi
 //
 // GETA Branch table
           LOC   8B
@@ -97,3 +98,4 @@ SHSPREGS  IS     @
           PUT   rJ,$8                // Set Ret Addr
           POP   0,0
 8H        IS    @
+//*END shspregs.mi

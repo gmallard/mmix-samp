@@ -1,3 +1,4 @@
+//*BEGIN prefix.mi
 // Start Data Segment
          LOC    Data_Segment
          GREG   @                   // Base Register
@@ -5,3 +6,4 @@
 // Start Code/Text Segment
          LOC    #100
 8H       IS     @                   // 8B/8H for code start/end
+//*END prefix.mi

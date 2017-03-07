@@ -1,3 +1,4 @@
+//*BEGIN shmemprd.mi
 // -------------------------------------------------------------------
           LOC    8B                 // Code start
           LOC   @+(4-@)&3           // TETRA Align
@@ -35,3 +36,4 @@ PUTMEMRD  IS     @
           PUT    rJ,$13             // Set Ret Addr          
           POP    0,0                // Return (no data)          
 8H        IS     @                  // Code end
+//*END shmemprd.mi

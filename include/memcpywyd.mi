@@ -1,3 +1,4 @@
+//*BEGIN memcpywyd.mi
 // -------------------------------------------------------------------
           LOC   8B
           LOC   @+(4-@)&3           // TETRA Align
@@ -19,3 +20,4 @@ MemCpyWyd IS    @
           PBP   $3,0B              // Loop for all
           POP   0,0                // Return
 8H        IS    @
+//*END memcpywyd.mi

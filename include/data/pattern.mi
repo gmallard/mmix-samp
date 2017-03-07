@@ -1,5 +1,7 @@
+//*BEGIN pattern.mi (data)
           LOC    9B                 // Data start
 LOWNYBS   OCTA   #0f0f0f0f0f0f0f0f
 HEXTRTABL BYTE   "0123456789abcdef"
 BYTELODMS OCTA   #0000000000000080
 9H        IS     @                  // Data end
+//*END pattern.mi (data)

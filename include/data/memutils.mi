@@ -1,3 +1,4 @@
+//*BEGIN memutils.mi (data)
 // -------------------------------------------------------------------
 // Data
          LOC    9B
@@ -91,3 +92,4 @@ CFOParms OCTA   CFOctaDA           // From Address
          OCTA   CTOctaDA           // To Address
          OCTA   (CTOctaDE-CTOctaDA)/8   // Length (tetras)
 9H       IS      @
+//*END memutils.mi (data)

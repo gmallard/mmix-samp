@@ -1,3 +1,4 @@
+//*BEGIN memsetbyt.mi
 // -------------------------------------------------------------------
           LOC   8B
           LOC   @+(4-@)&3           // TETRA Align
@@ -18,3 +19,4 @@ MemSetByt IS    @
           PBP   $2,0B             // Loop for all
           POP   0,0               // Return
 8H        IS    @
+//*END memsetbyt.mi

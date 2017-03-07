@@ -1,3 +1,4 @@
+//*BEGIN shmemory.mi
           LOC    8B                 // Code start
 //
 SHMEMORY  IS     @
@@ -143,3 +144,4 @@ PUTMEMLN  IS     @
           PUT    rJ,$13             // Set Ret Addr          
           POP    0,0                // Return (no data)          
 8H        IS     @                  // Code end
+//*END shmemory.mi

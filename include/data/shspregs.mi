@@ -1,3 +1,4 @@
+//*BEGIN shspregs.mi (data)
           LOC   9B
 //
 // Special Register Data
@@ -245,3 +246,4 @@ LOWNYBS   OCTA   #0f0f0f0f0f0f0f0f
 HEXTRTABL BYTE   "0123456789abcdef"
 BYTELODMS OCTA   #0000000000000080
 9H        IS   @
+//*END shspregs.mi (data)
