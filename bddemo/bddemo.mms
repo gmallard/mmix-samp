@@ -1,6 +1,7 @@
+//*BEGIN bddemo.mms
 // Examples of BDIF, from the docs.
 // Start Data Segment
-          LOC   Data_Segment
+          LOC   9B                  // Data start
           GREG  @                   // Base Register
 AVALUE    OCTA  #0102030405060708
 BVALUE    OCTA  #0301040205030604
@@ -9,11 +10,6 @@ LNMASK    OCTA  #0f0f0f0f0f0f0f0f
 //
 AVALUEND  OCTA  #21426384a5c6e723
 BVALUEND  OCTA  #1324504254b81f23
-//
-LOWNYBS   OCTA   #0f0f0f0f0f0f0f0f
-LOWNYB    OCTA   #000000000000000f
-HEXTRTABL BYTE   "0123456789abcdef"
-BYTELODMS OCTA   #0000000000000080
 //
 PARMAVLN  BYTE  "Parameter A Value #"
 PRAREG    BYTE  "________________",#a,0
@@ -34,9 +30,9 @@ CLIPSMRG  BYTE  "________________",#a,0
 //
 NYBDIFRS  BYTE  "Nyble Diff Result #"
 NYBDIFRG  BYTE  "________________",#a,0
-9H        IS    @
+9H        IS    @                   // Data end
 //
-         LOC   8B
+         LOC   8B                   // Text start
          LOC   #100
 Main     IS    @
 //
@@ -221,4 +217,5 @@ NYBDIFF  IS    @
          SET   $0,$8        // Ret val
          POP   1,0 // Ret
 
-8H       IS    @
+8H       IS    @                // Text end
+//*ENDbddemo.mms

@@ -1,0 +1,10 @@
+//*BEGIN memdmpcomm.mi
+          LOC    9B                 // Data start
+          GREG   @                  // Next base
+LOWNYBS   OCTA   #0f0f0f0f0f0f0f0f  // All low nybbles
+// Misnamed ....
+LOWNYB    OCTA   #000000000000000f  // One High nybble
+HEXTRTABL BYTE   "0123456789abcdef" // Hex translate table
+BYTELODMS OCTA   #0000000000000080  // To High byte MOR mask
+9H        IS     @                  // Data End
+//*END memdmpcomm.mi

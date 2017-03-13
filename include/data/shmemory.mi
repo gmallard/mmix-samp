@@ -2,10 +2,6 @@
           LOC    9B                 // Data start
           LOC    @+(8-@)&7           // OCTA Align
           GREG   @                  // Next data base
-LOWNYBS   OCTA   #0f0f0f0f0f0f0f0f
-LOWNYB    OCTA   #000000000000000f
-HEXTRTABL BYTE   "0123456789abcdef"
-BYTELODMS OCTA   #0000000000000080
 //
 DUMPBUFF  IS     @
 DBBLANK1A LOC    @+1                // A Blank
