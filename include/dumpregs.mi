@@ -1,0 +1,31 @@
+//*BEGIN dumpregs.mi
+          LOC    8B                 // Code start
+//
+DumpRegs  IS     @
+// Save everything
+          STOU   $0,RegSave+8*1     // $1 in caller ..
+          STOU   $1,RegSave+8*2     // $2 in caller ..
+          STOU   $2,RegSave+8*3     // $3 in caller ..
+          STOU   $3,RegSave+8*4     // $4 in caller ..
+          STOU   $4,RegSave+8*5     // $5 in caller ..
+          STOU   $5,RegSave+8*6     // $6 in caller ..
+          STOU   $6,RegSave+8*7     // $7 in caller ..
+          STOU   $7,RegSave+8*8     // $8 in caller ..
+          STOU   $8,RegSave+8*9     // $9 in caller ..
+          STOU   $0,RegSave+8*10    // $10 in caller ..
+          STOU   $10,RegSave+8*11   // $11 in caller ..
+          STOU   $11,RegSave+8*12   // $12 in caller ..
+          STOU   $12,RegSave+8*13   // $13 in caller ..
+          STOU   $13,RegSave+8*14   // $14 in caller ..
+          STOU   $14,RegSave+8*15   // $15 in caller ..
+          STOU   $15,RegSave+8*16   // $16 in caller ..
+          //
+          GET    $0,rJ              // Return address
+          STOU   $0,RegSave+8*0     // $0 in caller ..
+//
+          LDOU   $1,RegSave+8*1     // $1 in caller ..
+          LDOU   $0,RegSave+8*0     // $0 in caller ..
+          PUT    rJ,$0              // Set return
+          POP    0,0                // Return
+8H        IS     @                  // Code end
+//*END dumpregs.mi
