@@ -2,30 +2,72 @@
           LOC    8B                 // Code start
 //
 DumpRegs  IS     @
-// Save everything
-          STOU   $0,RegSave+8*1     // $1 in caller ..
-          STOU   $1,RegSave+8*2     // $2 in caller ..
-          STOU   $2,RegSave+8*3     // $3 in caller ..
-          STOU   $3,RegSave+8*4     // $4 in caller ..
-          STOU   $4,RegSave+8*5     // $5 in caller ..
-          STOU   $5,RegSave+8*6     // $6 in caller ..
-          STOU   $6,RegSave+8*7     // $7 in caller ..
-          STOU   $7,RegSave+8*8     // $8 in caller ..
-          STOU   $8,RegSave+8*9     // $9 in caller ..
-          STOU   $0,RegSave+8*10    // $10 in caller ..
-          STOU   $10,RegSave+8*11   // $11 in caller ..
-          STOU   $11,RegSave+8*12   // $12 in caller ..
-          STOU   $12,RegSave+8*13   // $13 in caller ..
-          STOU   $13,RegSave+8*14   // $14 in caller ..
-          STOU   $14,RegSave+8*15   // $15 in caller ..
-          STOU   $15,RegSave+8*16   // $16 in caller ..
-          //
-          GET    $0,rJ              // Return address
-          STOU   $0,RegSave+8*0     // $0 in caller ..
 //
-          LDOU   $1,RegSave+8*1     // $1 in caller ..
-          LDOU   $0,RegSave+8*0     // $0 in caller ..
-          PUT    rJ,$0              // Set return
-          POP    0,0                // Return
+// Calling sequence:
+//        GETA   $32,DumpRegs
+//        GO     $32,$32,0
+//
+          STOU   $0,RegSave+8*0     // $0 in caller ..
+          STOU   $1,RegSave+8*1     //
+          STOU   $2,RegSave+8*2     //
+          STOU   $3,RegSave+8*3     //
+          STOU   $4,RegSave+8*4     //
+          STOU   $5,RegSave+8*5     //
+          STOU   $6,RegSave+8*6     //
+          STOU   $7,RegSave+8*7     //
+          STOU   $8,RegSave+8*8     //
+          STOU   $9,RegSave+8*9     //
+          STOU   $10,RegSave+8*10   //
+          STOU   $11,RegSave+8*11   //
+          STOU   $12,RegSave+8*12   //
+          STOU   $13,RegSave+8*13   //
+          STOU   $14,RegSave+8*14   //
+          STOU   $15,RegSave+8*15   //
+//
+          STOU   $16,RegSave+8*16   //
+          STOU   $17,RegSave+8*17   //
+          STOU   $18,RegSave+8*18   //
+          STOU   $19,RegSave+8*19   //
+          STOU   $20,RegSave+8*20   //
+          STOU   $21,RegSave+8*21   //
+          STOU   $22,RegSave+8*22   //
+          STOU   $23,RegSave+8*23   //
+          STOU   $24,RegSave+8*24   //
+          STOU   $25,RegSave+8*25   //
+          STOU   $26,RegSave+8*26   //
+          STOU   $27,RegSave+8*27   //
+          STOU   $28,RegSave+8*28   //
+          STOU   $29,RegSave+8*29   //
+          STOU   $30,RegSave+8*30   //
+          STOU   $31,RegSave+8*31   //
+//
+          LDA    $33,RegSave        // Register save area addr
+          LDA    $34,RegNames       // Reg Names address
+          SET    $35,RegNamesN      // Number of entries
+NextRegln IS     @
+          LDTU   $36,$34,0          // L Reg Name
+          STTU   $36,DRegLN         // Save it
+          ADDU   $34,$34,RegNamesL  // Bump addr to Next
+          LDTU   $36,$34,0          // R Reg Name
+          STTU   $36,DRegRN         // Save it
+          ADDU   $34,$34,RegNamesL  // Bump addr to Next
+//
+          LDOU   $37,$33,0          // Next register data
+          LDA    $38,DregLHS        // Output area
+          GETA   $36,PUTMEMRD       // Build output area          
+          PUSHGO $36,$36,0          // Build output area
+          LDOU   $37,$33,8          // Next register data
+          LDA    $38,DregRHS        // Output area
+          GETA   $36,PUTMEMRD       // Build output area          
+          PUSHGO $36,$36,0          // Build output area
+//
+          LDA    $255,DRegLine      // Output area
+          TRAP   0,Fputs,StdOut     // Write it
+//
+          ADDU   $33,$33,16         // Next Register area
+          SUBU   $35,$35,1          // Decr entry count
+          PBP    $35,NextRegln      // Loop for all areas
+//
+          GO     $32,$32,0          // Return to caller
 8H        IS     @                  // Code end
 //*END dumpregs.mi
