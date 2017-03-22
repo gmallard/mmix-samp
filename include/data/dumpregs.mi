@@ -1,0 +1,41 @@
+//*BEGIN dumpregs.mi
+// Start Data Segment
+          LOC    9B                  // Data
+          LOC    @+(8-@)&7           // Octa align
+          GREG   @                   // Base Register
+NumRegs   IS     32                  // Dump 32 registers
+RegNames  IS     @                   // Register Names
+          BYTE   "$0  "              // $0
+// Names are TETRA aligned .....
+RegNamesL IS     @-RegNames          // Entry length
+          BYTE   "$1  $2  $3  $4  "  // Next entries
+          BYTE   "$5  $6  $7  $8  "  // Next entries
+          BYTE   "$9  $10 $11 $12 "  // Next entries
+          BYTE   "$13 $14 $15 $16 "  // Next entries
+          BYTE   "$17 $18 $19 $20 "  // Next entries
+          BYTE   "$21 $22 $23 $24 "  // Next entries
+          BYTE   "$25 $26 $27 $28 "  // Next entries
+          BYTE   "$29 $30 $31 "  // Next entries
+RegNamesN IS     ((@-RegNames)/RegNamesL)/2 // Number of entries
+// Register save area
+          LOC    @+(8-@)&7           // Octa align
+          GREG   @
+RegSave   IS     @
+          LOC    @+8*NumRegs         // Reserve storage
+// Dumpline
+          GREG   @                   // Base Register
+DRegLine  IS     @
+// Name should be TETRA aligned
+DRegLN    BYTE   "$xxx"              // Register Name
+          BYTE   " "                 // A blank
+          BYTE   "#"                 // Hex signal start
+DregLHS   BYTE   "................"  // LHS Register value
+          BYTE   "  "                // Two blanks
+// Name should be TETRA aligned
+DRegRN    BYTE   "$xxx"              // Register Name
+          BYTE   " "                 // A blank
+          BYTE   "#"                 // Hex signal start
+DregRHS   BYTE   "................"  // LHS Register value
+          BYTE   #a,0                // End of line
+9H        IS     @
+//*END dumpregs.mi
