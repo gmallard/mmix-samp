@@ -1,5 +1,6 @@
 //*BEGIN memdmpcomm.mi
           LOC    9B                 // Data start
+          LOC    @+(8-@)&7          // OCTA Align
           GREG   @                  // Next base
 LOWNYBS   OCTA   #0f0f0f0f0f0f0f0f  // All low nybbles
 // Misnamed ....
