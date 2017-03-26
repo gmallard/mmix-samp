@@ -11,27 +11,25 @@ LST_SUFF = lst
 INC_SUFF = incsave
 INC_FILE = $(TARG).includes
 
-all: $(TARG).$(OBJ_SUFF)
+all: cops $(TARG).$(OBJ_SUFF) cback
 
 $(TARG).$(OBJ_SUFF):$(TARG).$(SRC_SUFF)
 	$(MMIXAL) -l $(TARG).$(LST_SUFF) -o $(TARG).$(OBJ_SUFF) $(TARG).$(SRC_SUFF)
 
-allinc: cops $(TARG).$(OBJ_SUFF) cback
-
 cops: copbeg copdata catsrc copcode mvcode
 
 copbeg:
-	cp $(TARG).$(SRC_SUFF) $(TARG).$(INC_SUFF)
-	cp $(MMIX_INC)/prefix.mms $(TARG).work
+	@cp $(TARG).$(SRC_SUFF) $(TARG).$(INC_SUFF)
+	@cp $(MMIX_INC)/prefix.mms $(TARG).work
 
 catsrc:
-	cat $(TARG).$(SRC_SUFF) >> $(TARG).work
+	@cat $(TARG).$(SRC_SUFF) >> $(TARG).work
 
 mvcode:
-	mv $(TARG).work $(TARG).$(SRC_SUFF)
+	@mv $(TARG).work $(TARG).$(SRC_SUFF)
 
 copdata:
-	if [ -e $(TARG).incdata ]; \
+	@if [ -e $(TARG).incdata ]; \
 	then \
 	for f in $$(cat $(TARG).incdata); do \
 	echo $(MMIX_INCDATA)/$$f; \
@@ -40,7 +38,7 @@ copdata:
 	fi
 
 copcode:
-	if [ -e $(TARG).includes ]; \
+	@if [ -e $(TARG).includes ]; \
 	then \
 	for f in $$(cat $(TARG).includes); do \
 	echo $(MMIX_INC)/$$f; \
@@ -49,8 +47,8 @@ copcode:
 	fi
 
 cback:
-	cp $(TARG).$(INC_SUFF) $(TARG).$(SRC_SUFF)
-	rm $(TARG).$(INC_SUFF)
+	@cp $(TARG).$(INC_SUFF) $(TARG).$(SRC_SUFF)
+	@rm $(TARG).$(INC_SUFF)
 
 clean:
-	rm -f *.$(LST_SUFF) *.$(OBJ_SUFF) *.$(INC_SUFF)
+	@rm -f *.$(LST_SUFF) *.$(OBJ_SUFF) *.$(INC_SUFF)

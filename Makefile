@@ -2,6 +2,8 @@
 dirs = 	hello \
 	subroutines/subcalls \
   abend \
+  dumpregs \
+  dumpwork \
   tablescan/tscan1 \
   tablescan/tscan2 \
   tablescan/tscan3 \
@@ -18,7 +20,11 @@ dirs = 	hello \
   subroutines/subpj89 \
   sample \
   memutils \
+  memutils_inc \
   morex \
+  muxdemo \
+  shmemory \
+  shspregs \
   xadduex \
   xadduex2 \
 
