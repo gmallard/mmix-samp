@@ -1,9 +1,32 @@
 //*BEGIN prefix.mi
+//--------------------------------------------------------------------
 // Start Data Segment
          LOC    Data_Segment
-         GREG   @                   // Base Register
-9H       IS     @                   // 9B/9H for data start/end
-// Start Code/Text Segment
-         LOC    #100
-8H       IS     @                   // 8B/8H for code start/end
+9H       IS     @ // End data
+//--------------------------------------------------------------------
+// Subroutine gregister assignementss
+// 32 Base
+cr32     IS     $32
+pr32a    IS     $33
+pr32b    IS     $34
+pr32c    IS     $35
+// 31 Base
+cr16     IS     $15
+pr16a    IS     $17
+pr16b    IS     $18
+pr16c    IS     $195
+// 8 Base
+cr8      IS     $8
+pr8a     IS     $9
+pr8b     IS     $10
+pr8c     IS     $11
+// 4 Base
+cr4      IS     $8
+pr4a     IS     $6
+pr4b     IS     $6
+pr4c     IS     $7
+//--------------------------------------------------------------------
+         LOC    #100 // Start code
+8H       IS     @
+/--------------------------------------------------------------------
 //*END prefix.mi
