@@ -1,3 +1,4 @@
+//*BEGIN subcalls.mms
 //
 // Demonstrate simple style of subroutine linkage.  
 // One of several styles supported by MMIX.
@@ -5,7 +6,7 @@
 // Knuth indicates this is commonly used 'on machines that have no
 // built-in register stack mechanism.'
 //
-         LOC   #100
+         LOC   9B                  // Bacck to code
 Main     GETA  $255,Starting       // Address of start message
          TRAP  0,Fputs,StdOut      // Write it
 //
@@ -47,4 +48,4 @@ Sub2Msg  BYTE  "Message from routine two",#a,0
 //
          LOC   4*((@+3)/4)         // TETRA Align
 Sub3Msg  BYTE  "Message from routine three",#a,0
-
+//*END subcalls.mms

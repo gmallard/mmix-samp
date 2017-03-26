@@ -1,3 +1,4 @@
+//*BEGIN subcallspg.mms
 //
 // Demonstrate simple style of subroutine linkage.  
 // One of several styles supported by MMIX.
@@ -7,7 +8,7 @@
 // Subroutine linkages with inputs (in registers) and outputs
 // in registers are more complex.
 //
-         LOC   #100
+         LOC   9B
 Main     GETA  $255,Starting       // Address of start message
          TRAP  0,Fputs,StdOut      // Write it
 //
@@ -49,4 +50,4 @@ Sub2Msg  BYTE  "Message from routine two",#a,0
 //
          LOC   4*((@+3)/4)         // TETRA Align
 Sub3Msg  BYTE  "Message from routine three",#a,0
-
+//*BEGIN subcallspg.mms

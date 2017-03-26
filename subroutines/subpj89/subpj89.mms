@@ -1,18 +1,14 @@
+//*BEGIN subpj89.mms
 //
 // Demonstrate interleaving of data and instructions
 //
 // See page 7, section 16 of the MMIXWare documentation, where this 
 // technique is suggested.
 //
-// Start definitions.
+// Start of definitions is coded in the prefix.mms file which is
+// included by make.  This technique is used throughout the examples in
+// this reposiroty.
 //
-          LOC   Data_Segment
-          GREG  @
-9H        IS    @
-//
-          LOC   #100
-8H        IS    @
-
 // Change to Data
           LOC   9B
 Starting  BYTE  "Starting ....",#a,0
@@ -55,5 +51,4 @@ SendM2A   LDA   $255,Sub2Msg        // Message Address
           TRAP  0,Fputs,StdOut      // Write it
           POP   0,0                 // Return
 8H        IS    @
-
-
+//*BEGIN subpj89.mms
