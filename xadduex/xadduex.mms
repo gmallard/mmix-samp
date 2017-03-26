@@ -1,18 +1,10 @@
+//*BEGIN xaddues.mms
 // An exploration of the xADDU instructions.
 // Per the documentation:
 //
 // It is faster to execute 2ADDU $Y,$X,$X than it is to multiply by 3
 // if overflow is not an issue.
-
-// Start Data Segment
-          LOC   Data_Segment
-          GREG  @                   // Base Register
-9H        IS    @
-// Start Code/Text Segment
-          LOC   #100
-8H        IS    @
 // -------------------------------------------------------------------
-
 // First, some instruction timings, per documentation:
 //
 // MULU - 10u
@@ -462,4 +454,4 @@ Mult32    IS    @
           SLU   $0,$2,5             // *= 6 
           POP   1,0                 // Result in $0
 8H        IS    @
-
+//*END xaddues.mms
