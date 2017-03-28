@@ -1,33 +1,33 @@
 //*BEGIN prefix.mms
 //--------------------------------------------------------------------
 // Start Data Segment
-         LOC    Data_Segment
-         GREG   @                   // Start date base
+          LOC    Data_Segment        // Start data
+          GREG   @                   // Start date base
 //--------------------------------------------------------------------
-// Subroutine gregister assignementss
+// Subroutine gregisters
 // 32 Base
-cr32     IS     $32
-pr32a    IS     $33
-pr32b    IS     $34
-pr32c    IS     $35
+cr32      IS     $32                 // Call register
+pr32a     IS     $33                 // Parameter register
+pr32b     IS     $34                 // Parameter register
+pr32c     IS     $35                 // Parameter register
 // 16 Base
-cr16     IS     $15
-pr16a    IS     $17
-pr16b    IS     $18
-pr16c    IS     $195
+cr16      IS     $15                 // Call register
+pr16a     IS     $17                 // Parameter register
+pr16b     IS     $18                 // Parameter register
+pr16c     IS     $19                 // Parameter register
 // 8 Base
-cr8      IS     $8
-pr8a     IS     $9
-pr8b     IS     $10
-pr8c     IS     $11
+cr8       IS     $8                 // Call register
+pr8a      IS     $9                 // Parameter register
+pr8b      IS     $10                // Parameter register
+pr8c      IS     $11                // Parameter register
 // 4 Base
-cr4      IS     $8
-pr4a     IS     $6
-pr4b     IS     $6
-pr4c     IS     $7
-9H       IS     @ // End data
+cr4       IS     $4                 // Call register
+pr4a      IS     $5                 // Parameter register
+pr4b      IS     $6                 // Parameter register
+pr4c      IS     $7                 // Parameter register
+9H        IS     @                  // End data
 //--------------------------------------------------------------------
-         LOC    #100 // Start code
-8H       IS     @
+          LOC    #100               // Start code
+8H        IS     @
 /--------------------------------------------------------------------
 //*END prefix.mms
