@@ -1,6 +1,5 @@
          LOC   8B
 argv     IS    $1                  // Argv vector ?
-         LOC   #100
 Main     LDOU  $255,argv,0         // Address of program name
          TRAP  0,Fputs,StdOut      // Write it
          GETA  $255,String         // Point to String

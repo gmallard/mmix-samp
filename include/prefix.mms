@@ -1,8 +1,8 @@
-//*BEGIN prefix.mi
+//*BEGIN prefix.mms
 //--------------------------------------------------------------------
 // Start Data Segment
          LOC    Data_Segment
-9H       IS     @ // End data
+         GREG   @                   // Start date base
 //--------------------------------------------------------------------
 // Subroutine gregister assignementss
 // 32 Base
@@ -10,7 +10,7 @@ cr32     IS     $32
 pr32a    IS     $33
 pr32b    IS     $34
 pr32c    IS     $35
-// 31 Base
+// 16 Base
 cr16     IS     $15
 pr16a    IS     $17
 pr16b    IS     $18
@@ -25,8 +25,9 @@ cr4      IS     $8
 pr4a     IS     $6
 pr4b     IS     $6
 pr4c     IS     $7
+9H       IS     @ // End data
 //--------------------------------------------------------------------
          LOC    #100 // Start code
 8H       IS     @
 /--------------------------------------------------------------------
-//*END prefix.mi
+//*END prefix.mms
